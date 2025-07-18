@@ -1,0 +1,1439 @@
+openapi: 3.0.1
+info:
+  contact:
+    name: Cloud Security Developer Community
+  description: Create and manage destination lists and network destinations.
+  title: Cisco Secure Access Destination Lists API
+  version: 1.0.0
+servers:
+- url: "https://api.sse.cisco.com/{basePath}"
+  variables:
+    basePath:
+      default: policies/v2
+security:
+- oauthFlow: []
+tags:
+- description: Destination Lists
+  name: Destination Lists
+- description: Destinations
+  name: Destinations
+- name: Secure Access
+paths:
+  /destinationlists:
+    get:
+      description: Get the destination lists in your organization.
+      operationId: getDestinationLists
+      parameters:
+      - description: The number of a page in the collection.
+        example: 4
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          minimum: 1
+          type: integer
+        style: form
+      - description: The number of records in the collection to return on the page.
+        example: 50
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status:
+                  code: 200
+                  text: OK
+                meta:
+                  page: 1
+                  limit: 100
+                  total: 100
+                data:
+                - id: 1234567
+                  organizationId: 2345678
+                  access: allow
+                  isGlobal: true
+                  name: Global Allow List
+                  thirdpartyCategoryId: 0
+                  createdAt: 1490206249
+                  modifiedAt: 1520476127
+                  isMspDefault: false
+                  markedForDeletion: false
+                  bundleTypeId: 2
+                  meta:
+                    destinationCount: 5
+                    domainCount: 5
+                    urlCount: 0
+                    ipv4Count: 0
+                    ipv6Count: 0
+                    applicationCount: 0
+              schema:
+                $ref: '#/components/schemas/PaginatedDestinationListsResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - policies.destinationLists:read
+      summary: Get Destination Lists
+      tags:
+      - Destination Lists
+    post:
+      description: Create a destination list in your organization.
+      operationId: createDestinationList
+      requestBody:
+        content:
+          application/json:
+            example:
+              access: none
+              isGlobal: false
+              name: New Destination List
+            schema:
+              $ref: '#/components/schemas/DestinationListCreate'
+        description: |-
+          Provide destination information and an optional array of destination objects.
+          * Accepts no more than 500 destination objects.
+          * Does not support global destination lists. You must set the `isGlobal` field to `false`.
+          * Does not support an access type. Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`.
+          * You must set the `bundleTypeId` to `2`. Web profiles are applied on your policy rules.
+
+          If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list,
+          the operation may succeed (`HTTP/200 OK`).
+          However, the server returns an error message (`HTTP/400 Bad Request`) that indicates that the destination is on a high-volume domain.
+          **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status:
+                  code: 200
+                  text: OK
+                data:
+                  id: 2477857
+                  organizationId: 22429759
+                  access: none
+                  isGlobal: false
+                  name: New Destination List
+                  thirdpartyCategoryId: 0
+                  createdAt: 1532628019
+                  modifiedAt: 1532628019
+                  isMspDefault: false
+                  markedForDeletion: false
+                  bundleTypeId: 2
+                  meta:
+                    destinationCount: 1
+              schema:
+                $ref: '#/components/schemas/DestinationListResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - policies.destinationLists:write
+      summary: Create Destination List
+      tags:
+      - Destination Lists
+  /destinationlists/{destinationListId}:
+    delete:
+      description: Delete a destination list from your organization.
+      operationId: deleteDestinationList
+      parameters:
+      - description: The unique ID of the destination list.
+        example: 245
+        explode: false
+        in: path
+        name: destinationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status:
+                  code: 200
+                  text: OK
+                data: []
+              schema:
+                $ref: '#/components/schemas/DestinationListDelete'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - policies.destinationLists:write
+      summary: Delete Destination List
+      tags:
+      - Destination Lists
+    get:
+      description: Get a destination list.
+      operationId: getDestinationList
+      parameters:
+      - description: The unique ID of the destination list.
+        example: 245
+        explode: false
+        in: path
+        name: destinationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status:
+                  code: 200
+                  text: OK
+                data:
+                  id: 2477857
+                  organizationId: 22429759
+                  access: none
+                  isGlobal: false
+                  name: New name of destination list
+                  thirdpartyCategoryId: 0
+                  createdAt: 1532628019
+                  modifiedAt: 1532628019
+                  isMspDefault: false
+                  markedForDeletion: false
+                  bundleTypeId: 2
+                  meta:
+                    destinationCount: 1
+              schema:
+                $ref: '#/components/schemas/DestinationListResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - policies.destinationLists:read
+      summary: Get Destination List
+      tags:
+      - Destination Lists
+    patch:
+      description: Update a destination list in your organization.
+      operationId: updateDestinationLists
+      parameters:
+      - description: The unique ID of the destination list.
+        example: 245
+        explode: false
+        in: path
+        name: destinationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Updated name of destination list
+            schema:
+              $ref: '#/components/schemas/DestinationListPatch'
+        description: Update a destination list.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status:
+                  code: 200
+                  text: OK
+                data:
+                  id: 2477857
+                  organizationId: 22429759
+                  access: none
+                  isGlobal: false
+                  name: New name of destination list
+                  thirdpartyCategoryId: 0
+                  createdAt: 1532628019
+                  modifiedAt: 1532628019
+                  isMspDefault: false
+                  markedForDeletion: false
+                  bundleTypeId: 2
+                  meta:
+                    destinationCount: 1
+              schema:
+                $ref: '#/components/schemas/DestinationListResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - policies.destinationLists:write
+      summary: Update Destination List
+      tags:
+      - Destination Lists
+  /destinationlists/{destinationListId}/destinations:
+    get:
+      description: Get destinations in a destination list.
+      operationId: getDestinations
+      parameters:
+      - description: The unique ID of the destination list.
+        example: 245
+        explode: false
+        in: path
+        name: destinationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: The number of a page in the collection.
+        example: 4
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          minimum: 1
+          type: integer
+        style: form
+      - description: The number of records in the collection to return on the page.
+        example: 50
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status:
+                  code: 200
+                  text: OK
+                meta:
+                  page: 1
+                  limit: 100
+                  total: 24
+                data:
+                - id: "1234590"
+                  destination: cisco.com
+                  type: domain
+                  comment: A comment about test destination
+                  createdAt: 2021-07-23 19:36:45
+              schema:
+                $ref: '#/components/schemas/PaginatedDestinationObjectResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - policies.destinations:read
+      summary: Get Destinations in Destination List
+      tags:
+      - Destinations
+    post:
+      description: Add destinations to a destination list.
+      operationId: createDestinations
+      parameters:
+      - description: The unique ID of the destination list.
+        example: 245
+        explode: false
+        in: path
+        name: destinationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+            - destination: cisco.com
+            - destination: 10.10.10.10
+            - destination: mydestination/telemetry.com
+            schema:
+              items:
+                $ref: '#/components/schemas/DestinationCreateObject'
+              type: array
+        description: |-
+          Add destinations to a destination list.
+          Accepts no more than 500 destination objects in the body of the request.
+
+          If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list,
+          the operation may succeed (`HTTP/200 OK`).
+          However, the server returns an error message (`HTTP/400 Bad Request`) that indicates that the destination is on a high-volume domain.
+          **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status:
+                  code: 200
+                  text: OK
+                data:
+                  id: 2477857
+                  organizationId: 22429759
+                  access: none
+                  isGlobal: false
+                  name: New Destination List
+                  thirdpartyCategoryId: 0
+                  createdAt: 1532628019
+                  modifiedAt: 1532628019
+                  isMspDefault: false
+                  markedForDeletion: false
+                  bundleTypeId: 2
+                  meta:
+                    destinationCount: 5
+              schema:
+                $ref: '#/components/schemas/DestinationListResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - policies.destinations:write
+      summary: Add Destinations to Destination List
+      tags:
+      - Destinations
+  /destinationlists/{destinationListId}/destinations/remove:
+    delete:
+      description: |-
+        Remove destinations from the destination list.
+
+        **Note:** Accepts a list that contains no more than 500 destination IDs.
+
+        You can retrieve a list of the destinations in the destination list through the GET `/destinationlists/{destinationListId}/destinations` operation.
+        Then, to remove destinations in a destination list, provide a list of destination IDs in the request body of the
+        DELETE `/destinationlists/{destinationListId}/destinations/remove` operation.
+      operationId: deleteDestinations
+      parameters:
+      - description: The unique ID of the destination list.
+        example: 245
+        explode: false
+        in: path
+        name: destinationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+            - 12345
+            - 987435
+            schema:
+              $ref: '#/components/schemas/DestinationIdsList'
+        description: Add a list of destination ID.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status:
+                  code: 200
+                  text: OK
+                data:
+                  id: 2477857
+                  organizationId: 22429759
+                  access: none
+                  isGlobal: false
+                  name: New Destination List
+                  thirdpartyCategoryId: 0
+                  createdAt: 1532628019
+                  modifiedAt: 1532628019
+                  isMspDefault: false
+                  markedForDeletion: false
+                  bundleTypeId: 2
+                  meta:
+                    destinationCount: 5
+              schema:
+                $ref: '#/components/schemas/DestinationListResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not Found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - policies.destinations:write
+      summary: Delete Destinations from Destination List
+      tags:
+      - Destinations
+components:
+  headers:
+    Content-Type:
+      description: The MIME content type of the response body.
+      example: application/json
+      explode: false
+      schema:
+        type: string
+      style: simple
+    Date:
+      description: The timestamp of the response.
+      example: 2023-03-14T18:34:25Z
+      explode: false
+      schema:
+        pattern: "^[0-90-90-90-9-0-90-9-0-90-9T0-90-9:0-90-9:0-90-9Z]+$"
+        type: string
+      style: simple
+  parameters:
+    paginationPageParam:
+      description: The number of a page in the collection.
+      example: 4
+      explode: true
+      in: query
+      name: page
+      required: false
+      schema:
+        default: 1
+        format: int32
+        minimum: 1
+        type: integer
+      style: form
+    paginationLimitParam:
+      description: The number of records in the collection to return on the page.
+      example: 50
+      explode: true
+      in: query
+      name: limit
+      required: false
+      schema:
+        default: 100
+        format: int32
+        maximum: 100
+        minimum: 1
+        type: integer
+      style: form
+    destinationListId:
+      description: The unique ID of the destination list.
+      example: 245
+      explode: false
+      in: path
+      name: destinationListId
+      required: true
+      schema:
+        type: integer
+      style: simple
+  responses:
+    InvalidRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestError'
+      description: Bad Request
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnauthorizedError'
+      description: Unauthorized
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ForbiddenError'
+      description: Forbidden
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFoundError'
+      description: Not Found
+    ServerErr:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServerError'
+      description: Internal Server Error
+  schemas:
+    status:
+      description: The status information for the response.
+      example:
+        code: 200
+        text: OK
+      properties:
+        code:
+          description: The HTTP status code of the response.
+          example: 200
+          type: integer
+        text:
+          description: The HTTP message that describes the response.
+          example: OK
+          type: string
+      required:
+      - code
+      - text
+      type: object
+    meta:
+      description: The pagination information for the response.
+      example:
+        total: 20
+        limit: 10
+        page: 50
+      properties:
+        page:
+          description: The number of the page in the collection.
+          example: 50
+          type: integer
+        limit:
+          description: The maximum number of items that are returned on the page.
+          example: 10
+          type: integer
+        total:
+          description: The total number of items in the collection.
+          example: 20
+          type: integer
+      type: object
+    bundleTypeId:
+      description: |-
+        The type of the destination list.
+        In your policy rules, security controls are applied to your destination lists.
+        **Note:** When you create a destination list, set the `bundleTypeId` to `2`.
+      enum:
+      - 2
+      example: 2
+      type: integer
+    isGlobal:
+      description: |-
+        Specifies whether the destination list is a global destination list.
+        There is only one default `allow` destination list and one default `block` destination list for an organization.
+        **Note:** No support for global destination lists. When you creat a destination list, set the `isGlobal` field to `false`.
+      example: false
+      type: boolean
+    access:
+      description: |-
+        Configure your access rules to block or allow certain destination lists.
+        No support for the access type on destination lists.
+        Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`.
+      example: none
+      type: string
+    id:
+      description: The unique ID of the destination list.
+      example: 1234567
+      type: integer
+    idDestinationString:
+      description: The unique ID of the destination.
+      example: "1234567"
+      type: string
+    organizationId:
+      description: The organization ID.
+      example: 2345678
+      type: integer
+    PaginatedDestinationListsResponse:
+      description: "The status, metadata, and properties of the destination lists."
+      example:
+        data:
+        - id: 1234567
+          organizationId: 2345678
+          access: none
+          isGlobal: false
+          name: Global Allow List
+          thirdpartyCategoryId: 0
+          createdAt: 1490206249
+          modifiedAt: 1520476127
+          isMspDefault: false
+          markedForDeletion: false
+          bundleTypeId: 2
+          meta:
+            destinationCount: 5
+            domainCount: 5
+            urlCount: 0
+            ipv4Count: 0
+            ipv6Count: 0
+            applicationCount: 0
+        - id: 1234567
+          organizationId: 2345678
+          access: none
+          isGlobal: false
+          name: Global Allow List
+          thirdpartyCategoryId: 0
+          createdAt: 1490206249
+          modifiedAt: 1520476127
+          isMspDefault: false
+          markedForDeletion: false
+          bundleTypeId: 2
+          meta:
+            destinationCount: 5
+            domainCount: 5
+            urlCount: 0
+            ipv4Count: 0
+            ipv6Count: 0
+            applicationCount: 0
+        meta:
+          total: 20
+          limit: 10
+          page: 50
+        status:
+          code: 200
+          text: OK
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          description: The list of destination lists.
+          items:
+            $ref: '#/components/schemas/DestinationListObject'
+          type: array
+      required:
+      - data
+      - meta
+      - status
+      type: object
+    DestinationListResponse:
+      description: The status and properties of the destination lists.
+      example:
+        data:
+          id: 1234567
+          organizationId: 2345678
+          access: none
+          isGlobal: false
+          name: Global Allow List
+          thirdpartyCategoryId: 0
+          createdAt: 1490206249
+          modifiedAt: 1520476127
+          isMspDefault: false
+          markedForDeletion: false
+          bundleTypeId: 2
+          meta:
+            destinationCount: 5
+            domainCount: 5
+            urlCount: 0
+            ipv4Count: 0
+            ipv6Count: 0
+            applicationCount: 0
+        status:
+          code: 200
+          text: OK
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        data:
+          $ref: '#/components/schemas/DestinationListObject'
+      required:
+      - data
+      - status
+      type: object
+    DestinationListObject:
+      example:
+        id: 1234567
+        organizationId: 2345678
+        access: none
+        isGlobal: false
+        name: Global Allow List
+        thirdpartyCategoryId: 0
+        createdAt: 1490206249
+        modifiedAt: 1520476127
+        isMspDefault: false
+        markedForDeletion: false
+        bundleTypeId: 2
+        meta:
+          destinationCount: 5
+          domainCount: 5
+          urlCount: 0
+          ipv4Count: 0
+          ipv6Count: 0
+          applicationCount: 0
+      properties:
+        id:
+          description: The unique ID of the destination list.
+          example: 1234567
+          type: integer
+        organizationId:
+          description: The organization ID.
+          example: 2345678
+          type: integer
+        access:
+          description: |-
+            Configure your access rules to block or allow certain destination lists.
+            No support for the access type on destination lists.
+            Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`.
+          example: none
+          type: string
+        isGlobal:
+          description: |-
+            Specifies whether the destination list is a global destination list.
+            There is only one default `allow` destination list and one default `block` destination list for an organization.
+            **Note:** No support for global destination lists. When you creat a destination list, set the `isGlobal` field to `false`.
+          example: false
+          type: boolean
+        name:
+          description: The name of the destination list.
+          example: Global Allow list
+          type: string
+        thirdpartyCategoryId:
+          description: The third-party category ID of the destination list.
+          example: 1
+          type: integer
+        createdAt:
+          description: The date and time when the destination list was created.
+          example: 1490206249
+          type: integer
+        modifiedAt:
+          description: The date and time when the destination list was modified.
+          example: 1520476127
+          type: integer
+        isMspDefault:
+          description: Specifies whether MSP is the default.
+          example: false
+          type: boolean
+        markedForDeletion:
+          description: Specifies whether the destination list is marked for deletion.
+          example: false
+          type: boolean
+        bundleTypeId:
+          $ref: '#/components/schemas/bundleTypeId'
+        meta:
+          $ref: '#/components/schemas/DestinationListObject_meta'
+      required:
+      - access
+      - createdAt
+      - id
+      - isGlobal
+      - isMspDefault
+      - markedForDeletion
+      - modifiedAt
+      - name
+      - organizationId
+      - thirdpartyCategoryId
+      type: object
+    DestinationListCreate:
+      description: The properties of the destination list.
+      example:
+        access: none
+        isGlobal: false
+        name: The name of the destination list.
+      properties:
+        access:
+          description: |-
+            Configure your access rules to block or allow certain destination lists.
+            No support for the access type on destination lists.
+            Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`.
+          example: none
+          type: string
+        isGlobal:
+          description: |-
+            Specifies whether the destination list is a global destination list.
+            There is only one default `allow` destination list and one default `block` destination list for an organization.
+            **Note:** No support for global destination lists. When you creat a destination list, set the `isGlobal` field to `false`.
+          example: false
+          type: boolean
+        name:
+          description: The name of the destination list.
+          example: Global Allow list
+          type: string
+        bundleTypeId:
+          $ref: '#/components/schemas/bundleTypeId'
+        destinations:
+          description: The list of destinations.
+          items:
+            $ref: '#/components/schemas/DestinationListCreate_destinations_inner'
+          maxItems: 500
+          type: array
+      required:
+      - access
+      - isGlobal
+      - name
+      type: object
+    DestinationListPatch:
+      description: Update the name of the destination list.
+      example:
+        name: Global Allow list
+      properties:
+        name:
+          description: The name of the destination list.
+          example: Global Allow list
+          type: string
+      required:
+      - name
+      type: object
+    DestinationIdsList:
+      description: The list of destination ID.
+      example:
+      - 1234
+      - 187575
+      items:
+        example: 1234
+        type: integer
+      maxItems: 500
+      type: array
+    destination:
+      description: "A domain, URL, or IP."
+      example: cisco.com
+      type: string
+    name:
+      description: The name of the destination list.
+      example: Global Allow list
+      type: string
+    comment:
+      description: The comment about the destination.
+      example: Add new destination list
+      type: string
+    type:
+      description: The type of the destination.
+      enum:
+      - domain
+      - url
+      - ipv4
+      example: domain
+      type: string
+    DestinationCreateObject:
+      description: The properties of the destination.
+      example:
+        destination: mydestination.com
+        comment: A comment about the destination
+      properties:
+        destination:
+          description: "A domain, URL, or IP."
+          example: cisco.com
+          type: string
+        comment:
+          description: A comment about the destination.
+          example: A comment about the destination
+          type: string
+      required:
+      - destination
+      type: object
+    PaginatedDestinationObjectResponse:
+      description: "The status, metadata, and list of destinations for the destination\
+        \ list."
+      example:
+        data:
+        - id: "1234590"
+          destination: destination-two.com
+          type: domain
+          comment: A comment about test destination
+          createdAt: 2021-07-23 19:36:45
+        - id: "1234590"
+          destination: destination-two.com
+          type: domain
+          comment: A comment about test destination
+          createdAt: 2021-07-23 19:36:45
+        meta:
+          total: 20
+          limit: 10
+          page: 50
+        status:
+          code: 200
+          text: OK
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          description: The list of destinations in the destination list.
+          items:
+            $ref: '#/components/schemas/DestinationObjectWithStringId'
+          type: array
+      required:
+      - data
+      - meta
+      - status
+      type: object
+    DestinationObjectWithStringId:
+      example:
+        id: "1234590"
+        destination: destination-two.com
+        type: domain
+        comment: A comment about test destination
+        createdAt: 2021-07-23 19:36:45
+      properties:
+        id:
+          description: The unique ID of the destination.
+          example: "1234567"
+          type: string
+        destination:
+          description: "A domain, URL, or IP."
+          example: cisco.com
+          type: string
+        type:
+          $ref: '#/components/schemas/type'
+        comment:
+          description: The comment about the destination.
+          example: Add new destination list
+          type: string
+        createdAt:
+          description: The date and time when the destination list was created.
+          example: 2018-07-23 19:36:45
+          type: string
+      required:
+      - createdAt
+      - destination
+      - id
+      - type
+      type: object
+    DestinationListDelete:
+      description: Delete the destination list. The data field is empty in the response.
+      example:
+        status:
+          code: 200
+          text: OK
+        data: []
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        data:
+          items: {}
+          type: array
+      required:
+      - data
+      - status
+      type: object
+    BadRequestError:
+      description: Bad Request
+      example:
+        txId: d479k9i2b723
+        error: Bad Request
+        message: Validation Error
+        statusCode: 400
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 400
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Bad Request
+          type: string
+        message:
+          example: Validation Error
+          type: string
+        txId:
+          example: d479k9i2b723
+          type: string
+      type: object
+    UnauthorizedError:
+      description: Unauthorized
+      example:
+        txId: a478k9i2b723
+        error: Unauthorized
+        statusCode: 401
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 401
+          type: integer
+        error:
+          description: The authorization header is missing or the token is unauthorized.
+          example: Unauthorized
+          type: string
+        txId:
+          example: a478k9i2b723
+          type: string
+      type: object
+    ForbiddenError:
+      description: Forbidden
+      example:
+        txId: a478k9i2b723
+        error: Forbidden
+        statusCode: 403
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 403
+          type: integer
+        error:
+          description: The token is invalid.
+          example: Forbidden
+          type: string
+        txId:
+          example: a478k9i2b723
+          type: string
+      type: object
+    NotFoundError:
+      description: Not Found
+      example:
+        txId: a478k9i2b723
+        error: Not Found
+        statusCode: 404
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 404
+          type: integer
+        error:
+          description: A resource specified in the URL was not found.
+          example: Not Found
+          type: string
+        txId:
+          example: a478k9i2b723
+          type: string
+      type: object
+    ServerError:
+      description: Internal Server Error
+      example:
+        txId: l477k9i2b893
+        error: Internal Server Error
+        message: An internal server error occurred
+        statusCode: 500
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 500
+          type: integer
+        error:
+          description: The server can not process the request.
+          example: Internal Server Error
+          type: string
+        message:
+          example: An internal server error occurred
+          type: string
+        txId:
+          example: l477k9i2b893
+          type: string
+      type: object
+    DestinationListObject_meta:
+      description: The total number of each type of destination in the destination
+        list. The fields in the `meta` object are optional.
+      example:
+        domainCount: 1
+        urlCount: 0
+        ipv4Count: 1
+        ipv6Count: 0
+        destinationCount: 2
+        applicationCount: 0
+      properties:
+        destinationCount:
+          description: The total number of destinations in a destination list.
+          example: 5
+          type: integer
+        domainCount:
+          description: |-
+            The total number of domains in a destination list.
+            Domains are part of the total number of destinations in a destination list.
+          example: 5
+          type: integer
+        urlCount:
+          description: |-
+            The total number of URLs in a destination list.
+            Urls are part of the total number of destinations in a destination list.
+          example: 0
+          type: integer
+        ipv4Count:
+          description: |-
+            The total number of IPv4 addresses in a destination list.
+            IPv4 addresses are part of the total number of destinations in a destination list.
+          example: 0
+          type: integer
+        ipv6Count:
+          description: |-
+            The total number of IPv6 addresses in a destination list.
+            IPv6 addresses are part of the total number of destinations in a destination list.
+          example: 0
+          type: integer
+        applicationCount:
+          description: |-
+            The total number of applications in a destination list.
+            Applications are part of the total number of destinations in a destination list.
+          example: 0
+          type: integer
+      type: object
+    DestinationListCreate_destinations_inner:
+      description: The properties of the destination.
+      properties:
+        destination:
+          description: "A domain, URL, or IP."
+          example: cisco.com
+          type: string
+        type:
+          $ref: '#/components/schemas/type'
+        comment:
+          description: The comment about the destination.
+          example: Add new destination list
+          type: string
+      type: object
+  securitySchemes:
+    oauthFlow:
+      description: client credential flow
+      flows:
+        clientCredentials:
+          scopes:
+            policies.destinationLists:write: Write policies destination lists
+            policies.destinationLists:read: Read policies destination lists
+            policies.destinations:write: Write policies destinations
+            policies.destinations:read: Read policies destinations
+          tokenUrl: https://api.sse.cisco.com/auth/v2/token
+      type: oauth2

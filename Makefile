@@ -1,0 +1,27 @@
+
+generate:
+	openapi-generator generate -i $(SPEC) -g go --package-name $(PACKAGE) --git-host github.com --git-user-id cisco-sbg --git-repo-id go-ciscosecureaccess -o $(PACKAGE) --additional-properties=isGoSubmodule=true --type-mappings integer=int64,int=int64,number=int64 --openapi-normalizer KEEP_ONLY_FIRST_TAG_IN_OPERATION=true --additional-properties=disallowAdditionalPropertiesIfNotPresent=false $(CLI_EXTRA)
+	rm -f $(PACKAGE)/go.mod $(PACKAGE)/go.sum
+
+generate-destinationlists:
+	make generate PACKAGE=destinationlists SPEC=./specs/cisco_secure_access_destination_lists_api_1_0_0.yaml
+
+generate-ntg:
+	make generate PACKAGE=ntg SPEC=./specs/cisco_secure_access_network_tunnel_groups_and_regions_api_1_0_0.yaml CLI_EXTRA="$$(cat specs/ntg_name_mapping.txt)"
+
+generate-rules:
+	make generate PACKAGE=rules SPEC=./specs/cisco_secure_access_policy_rules_api_1_0_0.yaml CLI_EXTRA="--additional-properties=enumClassPrefix=true"
+
+generate-privateapps:
+	make generate PACKAGE=privateapps SPEC=./specs/cisco_secure_access_private_resources_and_resource_groups_api_1_0_0.yaml
+
+generate-resconn:
+	make generate PACKAGE=resconn SPEC=./specs/cisco_secure_access_resource_connector_groups_and_resource_connectors_api_1_0_0.yaml
+
+generate-reports:
+	make generate PACKAGE=reports SPEC=./specs/cisco_secure_access_reports.yaml CLI_EXTRA="--additional-properties=useTags=false --additional-properties=disallowAdditionalPropertiesIfNotPresent=false --additional-properties=enumClassPrefix=true --openapi-generator-ignore-list api_secure_access.go"
+
+generate-all:
+	for spec in destinationlists ntg reports resconn rules privateapps; do \
+	make generate-$${spec} ;\
+	done

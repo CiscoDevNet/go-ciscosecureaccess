@@ -1,0 +1,3639 @@
+openapi: 3.0.1
+info:
+  contact:
+    name: Cloud Security Developer Community
+  description: "Create and manage the access rules, rule settings, and application\
+    \ lists."
+  title: "Cisco Secure Access Rules, Rule Settings, and Application Lists APIs"
+  version: 1.0.0
+servers:
+- url: "https://api.sse.cisco.com/{basePath}"
+  variables:
+    basePath:
+      default: policies/v2
+security:
+- oauthFlow: []
+tags:
+- description: The API endpoints that manage the access rules for the organization.
+  name: Access Rules
+- description: The API endpoints that manage the rule settings and defaults on the
+    access rules.
+  name: Rule Settings and Defaults
+- description: The API endpoints that manage the internet application lists for the
+    organization.
+  name: Application Lists
+- name: Secure Access
+paths:
+  /applicationLists:
+    get:
+      description: Get the application lists and the number of application lists for
+        the organization.
+      operationId: getApplicationLists
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 3
+                results:
+                - modifiedAt: 2024-04-04T19:22:53+00:00
+                  applicationListName: New Application List- empty
+                  organizationId: 8094936
+                  createdAt: 2024-04-04T19:22:53+00:00
+                  applicationListId: 19457
+                  isDefault: false
+                - applicationCategoryIds: []
+                  modifiedAt: 2024-04-04T19:23:17+00:00
+                  applicationListName: New Application List empty
+                  organizationId: 8094936
+                  createdAt: 2024-04-04T19:23:17+00:00
+                  applicationListId: 19458
+                  isDefault: false
+                - modifiedAt: 2023-04-10T12:17:03+00:00
+                  applicationListName: this is a custom list
+                  organizationId: 8094936
+                  createdAt": 2023-03-28T20:32:05+00:00
+                  applicationListId: 14148
+                  isDefault: false
+              schema:
+                $ref: '#/components/schemas/ApplicationLists'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.applicationlists:read
+      summary: Get Application Lists
+      tags:
+      - Application Lists
+    post:
+      description: Create an application list for the organization.
+      operationId: createApplicationList
+      requestBody:
+        content:
+          application/json:
+            example:
+              applicationCategoryIds: []
+              applicationIds:
+              - 40
+              - 43
+              applicationListName: New Application List-5-24-24
+              isDefault: false
+            schema:
+              $ref: '#/components/schemas/ApplicationListRequest'
+        description: Create the application list.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                applicationCategoryIds: []
+                modifiedAt: 2024-05-24T19:22:53+00:00
+                applicationIds:
+                - 40
+                - 43
+                applicationListName: New Application List- empty
+                createdAt: 2024-05-24T19:22:53+00:00
+                isDefault: false
+              schema:
+                $ref: '#/components/schemas/ApplicationList'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.applicationlists:write
+      summary: Create Application List
+      tags:
+      - Application Lists
+  /applicationLists/{applicationListId}:
+    delete:
+      description: Delete the application list from the organization.
+      operationId: deleteApplicationList
+      parameters:
+      - description: The ID of the application list.
+        explode: false
+        in: path
+        name: applicationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 3
+                results:
+                - modifiedAt: 2024-04-04T19:22:53+00:00
+                  applicationListName: New Application List- empty
+                  organizationId: 8094936
+                  createdAt: 2024-04-04T19:22:53+00:00
+                  applicationListId: 19457
+                  isDefault: false
+                - applicationCategoryIds: []
+                  modifiedAt: 2024-04-04T19:23:17+00:00
+                  applicationListName: New Application List empty
+                  organizationId: 8094936
+                  createdAt: 2024-04-04T19:23:17+00:00
+                  applicationListId: 19458
+                  isDefault: false
+                - modifiedAt: 2023-04-10T12:17:03+00:00
+                  applicationListName: this is a custom list
+                  organizationId: 8094936
+                  createdAt": 2023-03-28T20:32:05+00:00
+                  applicationListId: 14148
+                  isDefault: false
+              schema:
+                $ref: '#/components/schemas/ApplicationLists'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.applicationlists:write
+      summary: Delete Application List
+      tags:
+      - Application Lists
+    get:
+      description: Get the properties of an application list.
+      operationId: getApplicationList
+      parameters:
+      - description: The ID of the application list.
+        explode: false
+        in: path
+        name: applicationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                applicationCategoryIds: []
+                modifiedAt: 2024-05-24T19:22:53+00:00
+                applicationIds:
+                - 40
+                - 43
+                applicationListName: New Application List
+                createdAt: 2024-05-24T19:22:53+00:00
+                isDefault: false
+              schema:
+                $ref: '#/components/schemas/ApplicationList'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.applicationlists:read
+      summary: Get Application List
+      tags:
+      - Application Lists
+    put:
+      description: Update the properties on the application list.
+      operationId: putApplicationList
+      parameters:
+      - description: The ID of the application list.
+        explode: false
+        in: path
+        name: applicationListId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              applicationCategoryIds: []
+              applicationIds:
+              - 40
+              - 43
+              applicationListName: New Application List- empty
+              isDefault: false
+            schema:
+              $ref: '#/components/schemas/ApplicationListRequest'
+        description: Update the application list.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                applicationCategoryIds: []
+                modifiedAt: 2024-05-24T19:22:53+00:00
+                applicationIds:
+                - 40
+                - 43
+                applicationListName: New Application List- empty
+                createdAt: 2024-05-24T19:22:53+00:00
+                isDefault: false
+              schema:
+                $ref: '#/components/schemas/ApplicationList'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.applicationlists:write
+      summary: Update Application List
+      tags:
+      - Application Lists
+  /applications/usage:
+    get:
+      description: Get the list of application information for the application lists.
+      operationId: updateUsageApplications
+      parameters:
+      - description: Filter on the name of the rule attribute.
+        explode: true
+        in: query
+        name: attributeName
+        required: true
+        schema:
+          $ref: '#/components/schemas/attributeNameInQuery'
+        style: form
+      - description: Filter on the value of the rule attribute.
+        explode: true
+        in: query
+        name: attributeValue
+        required: true
+        schema:
+          $ref: '#/components/schemas/attributeValueInQuery'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - applicationId: 40
+                usedBy:
+                  applicationLists:
+                  - applicationListId: 15316
+                    applicationListName: All Application Selection 3k
+                    applicationIds:
+                    - 40
+                    - 43
+                    isRuleAssociated: true
+                    usedByRules: []
+                  - applicationListId: 14803
+                    applicationListName: New Application List - 123
+                    applicationIds:
+                    - 40
+                    - 43
+                    isRuleAssociated: true
+                    usedByRules: []
+              schema:
+                $ref: '#/components/schemas/ApplicationUsageResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.applicationlists:read
+      summary: Get Usage of Applications
+      tags:
+      - Application Lists
+  /settings:
+    get:
+      description: Get the global policy settings and rule defaults for the organization.
+      operationId: getPolicySettings
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - settingName: sse.decryption.logPrivate
+                settingValue: false
+              schema:
+                $ref: '#/components/schemas/SettingsResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.settings:read
+      summary: Get Rule Defaults and Global Policy Settings
+      tags:
+      - Rule Settings and Defaults
+    put:
+      description: Update the rule defaults and global policy settings.
+      operationId: putPolicySettings
+      requestBody:
+        content:
+          application/json:
+            example:
+            - settingName: sse.decryption.logPrivate
+              settingValue: true
+            schema:
+              $ref: '#/components/schemas/SettingsRequest'
+        description: Update the policy settings.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - createdAt: 2024-03-26T18:54:45+00:00
+                settingName: sse.decryption.logPrivate
+                settingValue: true
+                modifiedAt: 2024-03-26T18:54:45+00:00
+              schema:
+                $ref: '#/components/schemas/SettingResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.settings:write
+      summary: Update Rule Defaults and Global Policy Settings
+      tags:
+      - Rule Settings and Defaults
+  /settings/{settingName}:
+    get:
+      description: Get the policy setting identified by the setting name.
+      operationId: getPolicySetting
+      parameters:
+      - description: The name of the global setting on the policy.
+        example: sse.decryption.logPrivate
+        explode: false
+        in: path
+        name: settingName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                createdAt: 2024-03-26T18:54:45+00:00
+                settingName: umbrella.logLevel
+                settingValue: LOG_NONE
+                modifiedAt: 2024-03-26T18:54:45+00:00
+              schema:
+                $ref: '#/components/schemas/SettingsResponseObject'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.settings:read
+      summary: Get Policy Setting
+      tags:
+      - Rule Settings and Defaults
+    put:
+      description: Update the policy setting.
+      operationId: putPolicySetting
+      parameters:
+      - description: The name of the global setting on the policy.
+        example: sse.decryption.logPrivate
+        explode: false
+        in: path
+        name: settingName
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              settingName: sse.decryption.logPrivate
+              settingValue: true
+            schema:
+              $ref: '#/components/schemas/SettingsRequestObject'
+        description: Update the policy setting.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                createdAt: 2024-03-26T18:54:45+00:00
+                settingName: umbrella.logLevel
+                settingValue: LOG_NONE
+                modifiedAt: 2024-03-26T18:54:45+00:00
+              schema:
+                $ref: '#/components/schemas/SettingsResponseObject'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.settings:write
+      summary: Update Policy Setting
+      tags:
+      - Rule Settings and Defaults
+  /settingTypes:
+    get:
+      description: List the policy setting types.
+      operationId: getPolicySettingTypes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingTypesResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.settings:read
+      summary: List Policy Setting Types
+      tags:
+      - Rule Settings and Defaults
+  /settingTypes/{settingName}:
+    get:
+      description: Get the type of the policy setting.
+      operationId: getSettingTypesByName
+      parameters:
+      - description: The name of the global setting on the policy.
+        example: sse.decryption.logPrivate
+        explode: false
+        in: path
+        name: settingName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingTypesResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.settings:read
+      summary: Get Policy Setting Type
+      tags:
+      - Rule Settings and Defaults
+  /rules:
+    get:
+      description: List the rules in the policy for the organization.
+      operationId: listRules
+      parameters:
+      - description: |-
+          The place to start reading in the collection. The default value is `0`.
+          For example, the offset of the first page in the collection is `0`.
+          If the limit is 10, the offset for next page is `10`.
+        example: 10
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - description: Set the number of items on a page. The maximum items that are
+          allowed on a page in the response are 1000.
+        example: 20
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Filter the rules using the name of the rule or a sequence of
+          characters found in the rule name.
+        example: Allow all rule
+        explode: true
+        in: query
+        name: ruleName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |-
+          Filter the rules by one or more properties.
+          Filter on: `ruleName`, `ruleDescription`, `ruleIsEnabled`, `ruleIsDefault`, `ruleAction`, `attributeName` and `attributeValue`, `settingName` and `settingValue`,
+          `rulePriority`, `destinations`, `sources`, `ruleConditions`.
+          Specify the properties in the JSON format.
+          **Note:** Filter on either `ruleConditions` or the `sources` and `destinations` properties, but not both sets of properties.
+
+          Example:
+
+          ```
+          {
+            "destinations": [
+              "umbrella.destination.destination_list_ids": "*"
+            ],
+            "sources": [
+              "umbrella.source.identity_ids": "*"
+            ],
+            "rulePriority": "1,2,3"
+          }
+          ```
+        example:
+          destinations:
+          - umbrella.destination.destination_list_ids: '*'
+          ruleAction: block
+          rulePriority: "9,100"
+          ruleName: Rule 31 Created by Cisco Assistant
+          ruleIsEnabled: false
+          ruleDescription: Rule Created by Policy Assistant
+          ruleConditions:
+          - umbrella.source.all: false
+          - umbrella.destination.application_ids: "1008716,5000041"
+        explode: true
+        in: query
+        name: filters
+        required: false
+        schema:
+          $ref: '#/components/schemas/RuleFilters'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                count: 1
+                result:
+                - modifiedAt: 2024-04-01T19:42:38
+                  ruleAccess: internet
+                  ruleIsDefault: false
+                  rulePriority: 9
+                  ruleName: Rule 31 Created by Cisco Assistant
+                  ruleId: 591710
+                  ruleIsEnabled: false
+                  ruleDescription: Rule Created by Policy Assistant
+                  modifiedBy: service/chatgpt.policy-api/key/1
+                  createdAt: 2024-03-28T18:17:36
+                  ruleAction: allow
+              schema:
+                $ref: '#/components/schemas/Rules'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.rules:read
+      summary: List Rules
+      tags:
+      - Access Rules
+    post:
+      description: Create a rule on the policy for the organization.
+      operationId: addRule
+      requestBody:
+        $ref: '#/components/requestBodies/RuleRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                modifiedAt: 2024-04-01T19:42:38
+                ruleIsDefault: false
+                organizationId: 8094936
+                rulePriority: 9
+                ruleName: Rule 31 Created by Cisco Assistant
+                ruleId: 591710
+                ruleConditions:
+                - attributeOperator: INTERSECT
+                  attributeName: umbrella.source.identity_type_ids
+                  attributeValue:
+                  - 7
+                - attributeOperator: INTERSECT
+                  attributeName: umbrella.destination.private_resource_ids
+                  attributeValue:
+                  - 1640
+                ruleIsEnabled: false
+                ruleDescription: Rule Created by Policy Assistant
+                ruleSettings:
+                - settingValue: LOG_ALL
+                  settingName: umbrella.logLevel
+                  modifiedAt: 2024-03-26T18:54:45+00:00
+                  createdAt: 2024-03-28T18:17:36
+                - settingValue: PRIVATE_NETWORK
+                  settingName: umbrella.default.traffic
+                  modifiedAt: 2024-03-26T18:54:45+00:00
+                  createdAt: 2024-03-28T18:17:36
+                modifiedBy: service/chatgpt.policy-api/key/1
+                createdAt: 2024-03-28T18:17:36
+                ruleAction: allow
+              schema:
+                $ref: '#/components/schemas/Rule'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.rules:write
+      summary: Create Rule
+      tags:
+      - Access Rules
+    put:
+      description: Enable or disable the rules on the policy.
+      operationId: putRules
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateRulesRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - organizationId: 8094936
+                rulesetId: 145609
+                ruleIsDefault: false
+                modifiedAt: 2024-04-01T19:42:38
+                rulePriority: 9
+                ruleId: 591710
+                ruleIsEnabled: false
+                ruleDescription: Rule Created by Policy Assistant
+                ruleName: Rule 31 Created by Cisco Assistant
+                modifiedBy: service/chatgpt.policy-api/key/1
+                createdAt: 2024-03-28T18:17:36
+                ruleAction: allow
+              schema:
+                $ref: '#/components/schemas/RulesResponse'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.rules:write
+      summary: Enable Rules
+      tags:
+      - Access Rules
+  /rules/{ruleId}:
+    delete:
+      description: Delete a rule on the policy for the organization.
+      operationId: deleteRule
+      parameters:
+      - description: The ID of the rule.
+        example: 2456
+        explode: false
+        in: path
+        name: ruleId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content: {}
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.rules:write
+      summary: Delete Rule
+      tags:
+      - Access Rules
+    get:
+      description: Get the details about the rule.
+      operationId: getRule
+      parameters:
+      - description: The ID of the rule.
+        example: 2456
+        explode: false
+        in: path
+        name: ruleId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                modifiedAt: 2024-04-01T19:42:38
+                ruleIsDefault: false
+                organizationId: 8094936
+                rulePriority: 9
+                ruleName: Rule 31 Created by Cisco Assistant
+                ruleId: 591710
+                ruleConditions:
+                - attributeOperator: INTERSECT
+                  attributeName: umbrella.source.identity_type_ids
+                  attributeValue:
+                  - 7
+                - attributeOperator: INTERSECT
+                  attributeName: umbrella.destination.private_resource_ids
+                  attributeValue:
+                  - 1640
+                ruleIsEnabled: false
+                ruleDescription: Rule Created by Policy Assistant
+                ruleSettings:
+                - settingValue: LOG_ALL
+                  settingName: umbrella.logLevel
+                  modifiedAt: 2024-03-26T18:54:45+00:00
+                  createdAt: 2024-03-28T18:17:36
+                - settingValue: PRIVATE_NETWORK
+                  settingName: umbrella.default.traffic
+                  modifiedAt: 2024-03-26T18:54:45+00:00
+                  createdAt: 2024-03-28T18:17:36
+                modifiedBy: service/chatgpt.policy-api/key/1
+                createdAt: 2024-03-28T18:17:36
+                ruleAction: allow
+              schema:
+                $ref: '#/components/schemas/Rule'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.rules:read
+      summary: Get Rule
+      tags:
+      - Access Rules
+    put:
+      description: Update the properties on the rule.
+      operationId: putRule
+      parameters:
+      - description: The ID of the rule.
+        example: 2456
+        explode: false
+        in: path
+        name: ruleId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/RuleRequestUpdate'
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                modifiedAt: 2024-04-01T19:42:38
+                ruleIsDefault: false
+                organizationId: 8094936
+                rulePriority: 9
+                ruleName: Rule 31 Created by Cisco Assistant
+                ruleId: 591710
+                ruleConditions:
+                - attributeOperator: INTERSECT
+                  attributeName: umbrella.source.identity_type_ids
+                  attributeValue:
+                  - 7
+                - attributeOperator: INTERSECT
+                  attributeName: umbrella.destination.private_resource_ids
+                  attributeValue:
+                  - 1640
+                ruleIsEnabled: false
+                ruleDescription: Rule Created by Policy Assistant
+                ruleSettings:
+                - settingValue: LOG_ALL
+                  settingName: umbrella.logLevel
+                  modifiedAt: 2024-03-26T18:54:45+00:00
+                  createdAt: 2024-03-28T18:17:36
+                - settingValue: PRIVATE_NETWORK
+                  settingName: umbrella.default.traffic
+                  modifiedAt: 2024-03-26T18:54:45+00:00
+                  createdAt: 2024-03-28T18:17:36
+                modifiedBy: service/chatgpt.policy-api/key/1
+                createdAt: 2024-03-28T18:17:36
+                ruleAction: allow
+              schema:
+                $ref: '#/components/schemas/Rule'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.rules:write
+      summary: Update Rule
+      tags:
+      - Access Rules
+  /geolocations:
+    get:
+      description: |-
+        List the regional information for the continents and countries.
+        You can use the country code to create a block on the traffic defined in an internet access rule.
+      operationId: getRegionalLocations
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                results:
+                - continentName: South America
+                  countries:
+                  - countryName: Argentina
+                    countryCode: AR
+                  - countryName: Brazil
+                    countryCode: BR
+                - continentName: Asia
+                  countries:
+                  - countryName: India
+                    countryCode: IN
+                  - countryName: Malaysia
+                    countryCode: MY
+              schema:
+                $ref: '#/components/schemas/Regions'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_400_response'
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_401_response'
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_403_response'
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_404_response'
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationLists_500_response'
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Date:
+              $ref: '#/components/headers/Date'
+      security:
+      - oauthFlow:
+        - policies.rules:read
+      summary: List GeoLocations
+      tags:
+      - Access Rules
+components:
+  headers:
+    Content-Type:
+      description: The MIME content type of the response body.
+      example: application/json
+      explode: false
+      schema:
+        type: string
+      style: simple
+    Date:
+      description: The timestamp of the response.
+      example: 2023-03-14T18:34:25Z
+      explode: false
+      schema:
+        pattern: "^[0-90-90-90-9-0-90-9-0-90-9T0-90-9:0-90-9:0-90-9Z]+$"
+        type: string
+      style: simple
+  parameters:
+    attributeName:
+      description: Filter on the name of the rule attribute.
+      explode: true
+      in: query
+      name: attributeName
+      required: true
+      schema:
+        $ref: '#/components/schemas/attributeNameInQuery'
+      style: form
+    attributeValue:
+      description: Filter on the value of the rule attribute.
+      explode: true
+      in: query
+      name: attributeValue
+      required: true
+      schema:
+        $ref: '#/components/schemas/attributeValueInQuery'
+      style: form
+    ruleId:
+      description: The ID of the rule.
+      example: 2456
+      explode: false
+      in: path
+      name: ruleId
+      required: true
+      schema:
+        type: integer
+      style: simple
+    settingName:
+      description: The name of the global setting on the policy.
+      example: sse.decryption.logPrivate
+      explode: false
+      in: path
+      name: settingName
+      required: true
+      schema:
+        type: string
+      style: simple
+    applicationListId:
+      description: The ID of the application list.
+      explode: false
+      in: path
+      name: applicationListId
+      required: true
+      schema:
+        type: integer
+      style: simple
+    offset:
+      description: |-
+        The place to start reading in the collection. The default value is `0`.
+        For example, the offset of the first page in the collection is `0`.
+        If the limit is 10, the offset for next page is `10`.
+      example: 10
+      explode: true
+      in: query
+      name: offset
+      required: false
+      schema:
+        default: 0
+        type: integer
+      style: form
+    limit:
+      description: Set the number of items on a page. The maximum items that are allowed
+        on a page in the response are 1000.
+      example: 20
+      explode: true
+      in: query
+      name: limit
+      required: false
+      schema:
+        default: 10
+        type: integer
+      style: form
+    ruleName:
+      description: Filter the rules using the name of the rule or a sequence of characters
+        found in the rule name.
+      example: Allow all rule
+      explode: true
+      in: query
+      name: ruleName
+      required: false
+      schema:
+        type: string
+      style: form
+    filters:
+      description: |-
+        Filter the rules by one or more properties.
+        Filter on: `ruleName`, `ruleDescription`, `ruleIsEnabled`, `ruleIsDefault`, `ruleAction`, `attributeName` and `attributeValue`, `settingName` and `settingValue`,
+        `rulePriority`, `destinations`, `sources`, `ruleConditions`.
+        Specify the properties in the JSON format.
+        **Note:** Filter on either `ruleConditions` or the `sources` and `destinations` properties, but not both sets of properties.
+
+        Example:
+
+        ```
+        {
+          "destinations": [
+            "umbrella.destination.destination_list_ids": "*"
+          ],
+          "sources": [
+            "umbrella.source.identity_ids": "*"
+          ],
+          "rulePriority": "1,2,3"
+        }
+        ```
+      example:
+        destinations:
+        - umbrella.destination.destination_list_ids: '*'
+        ruleAction: block
+        rulePriority: "9,100"
+        ruleName: Rule 31 Created by Cisco Assistant
+        ruleIsEnabled: false
+        ruleDescription: Rule Created by Policy Assistant
+        ruleConditions:
+        - umbrella.source.all: false
+        - umbrella.destination.application_ids: "1008716,5000041"
+      explode: true
+      in: query
+      name: filters
+      required: false
+      schema:
+        $ref: '#/components/schemas/RuleFilters'
+      style: form
+  requestBodies:
+    RuleRequest:
+      content:
+        application/json:
+          example:
+            ruleName: Test rule
+            ruleDescription: The description for the rule.
+            ruleAction: allow
+            ruleConditions:
+            - attributeName: umbrella.destination.all
+              attributeValue: true
+              attributeOperator: =
+            - attributeName: umbrella.source.all
+              attributeValue: true
+              attributeOperator: =
+            ruleSettings:
+            - settingName: umbrella.default.traffic
+              settingValue: PUBLIC_INTERNET
+          schema:
+            $ref: '#/components/schemas/addRule_request'
+      description: Create the rule with the specific properties.
+      required: true
+    RuleRequestUpdate:
+      content:
+        application/json:
+          example:
+            ruleName: Test rule
+            ruleDescription: The description for the rule.
+            ruleAction: allow
+            rulePriority: 25
+            ruleConditions:
+            - attributeName: umbrella.destination.all
+              attributeValue: true
+              attributeOperator: =
+            - attributeName: umbrella.source.all
+              attributeValue: true
+              attributeOperator: =
+            ruleSettings:
+            - settingName: umbrella.default.traffic
+              settingValue: PUBLIC_INTERNET
+          schema:
+            $ref: '#/components/schemas/putRule_request'
+      description: Create the rule with the specific properties.
+      required: true
+    UpdateRulesRequest:
+      content:
+        application/json:
+          example:
+            ruleIds:
+            - 591713
+            - 591710
+            properties:
+            - ruleIsEnabled: true
+            - ruleIsEnabled: false
+          schema:
+            $ref: '#/components/schemas/putRules_request'
+      description: |-
+        Provide the list of rule IDs and set the `ruleIsEnabled` property on these rules.
+        **Note:** You cannot update the `ruleIsEnabled` property on the default rules.
+  responses:
+    "400Error":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getApplicationLists_400_response'
+      description: Bad Request
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Date:
+          $ref: '#/components/headers/Date'
+    "401Error":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getApplicationLists_401_response'
+      description: Unauthorized
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Date:
+          $ref: '#/components/headers/Date'
+    "403Error":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getApplicationLists_403_response'
+      description: Forbidden
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Date:
+          $ref: '#/components/headers/Date'
+    "404Error":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getApplicationLists_404_response'
+      description: Not Found
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Date:
+          $ref: '#/components/headers/Date'
+    "500Error":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getApplicationLists_500_response'
+      description: Internal Server Error
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Date:
+          $ref: '#/components/headers/Date'
+  schemas:
+    ruleIsDefault:
+      description: Specifies whether the rule is the default rule.
+      example: true
+      type: boolean
+    ruleIsEnabled:
+      description: Specifies whether the rule is enabled.
+      example: true
+      type: boolean
+    ruleAction:
+      description: The action set on the rule.
+      enum:
+      - allow
+      - block
+      example: allow
+      type: string
+    rulePriority:
+      description: |-
+        The positive integer that represents the priority of the rule.
+        The priority is unique across all rules on the policy for the organization.
+      example: 1
+      type: integer
+    ruleDescription:
+      description: The meaningful information about the rule. The description can
+        have no more than 256 characters.
+      example: The rule for the London office.
+      maxLength: 256
+      type: string
+    ruleId:
+      description: The ID of the rule.
+      example: 183456
+      readOnly: true
+      type: integer
+    ruleName:
+      description: |-
+        The name of the rule. The name must be unique across all rules for the organization's policy.
+        The name can have no more than 256 characters.
+      example: SSE Rule 1
+      maxLength: 256
+      type: string
+    modifiedBy:
+      description: A string that includes the organization ID and user ID for the
+        account that modified the access rule.
+      example: org/1234/user/123453
+      type: string
+    settingName:
+      description: The name of the rule setting.
+      enum:
+      - sse.decryption.logInternet
+      - sse.decryption.logPrivate
+      - sse.globalIPSEnabled
+      - sse.ztaAuthnTimeoutEnabled
+      - sse.tenantControlProfileId
+      - sse.ztaAuthnTimeoutMinutes
+      - sse.ztnaSessionTimeoutMinutes
+      - umbrella.ipSurrogatesEnabled
+      - umbrella.m365Compatibility
+      - umbrella.posture.webProfileId
+      - umbrella.posture.ipsProfileId
+      - umbrella.posture.profileIdClientbased
+      - umbrella.posture.profileIdClientless
+      - umbrella.posture.privateSecurityProfileId
+      - umbrella.logLevel
+      - umbrella.default.traffic
+      - global.setting.disableDecryptionSource
+      example: umbrella.logLevel
+      type: string
+    settingDescription:
+      description: The description of the access rule setting.
+      example: Bypass for decryption.
+      type: string
+    settingValue:
+      description: The value of the rule setting.
+      example: LOG_NONE
+      oneOf:
+      - type: string
+      - type: integer
+      - type: boolean
+      - items:
+          type: integer
+        type: array
+    ruleSettings:
+      description: The list of settings on a rule.
+      example:
+      - settingName: sse.decryption.logInternet
+        settingValue: false
+      items:
+        $ref: '#/components/schemas/ruleSettings_inner'
+      type: array
+    attributeValue:
+      description: The value of the attribute.
+      example: 123
+      oneOf:
+      - type: string
+      - type: boolean
+      - $ref: '#/components/schemas/attributeValueArrayIntegers'
+      - $ref: '#/components/schemas/attributeValueArrayStrings'
+    attributeValueArrayIntegers:
+      description: The list of integers that represent the attribute values.
+      example:
+      - 235
+      - 355
+      items:
+        description: An integer that represents the attribute value.
+        type: integer
+      type: array
+    attributeValueArrayStrings:
+      description: The list of strings that represent the attribute values.
+      example:
+      - apps
+      - groups
+      items:
+        description: A string that represents the attribute value.
+        type: string
+      type: array
+    attributeValueInQuery:
+      description: The comma-separated list of application IDs.
+      example: "41,51"
+      items:
+        type: integer
+      type: array
+    attributeNameInQuery:
+      description: The name of the attribute for use in the applications usage query
+        parameter.
+      enum:
+      - umbrella.destination.application_ids
+      example: umbrella.destination.application_ids
+      type: string
+    attributeNameSource:
+      description: The name of the attributes for the source components.
+      enum:
+      - umbrella.source.all
+      - umbrella.source.networkObjectIds
+      - umbrella.source.networkObjectGroupIds
+      - umbrella.source.identity_type_ids
+      - umbrella.source.ip_address
+      - umbrella.source.identity_ids
+      - umbrella.destination.private_resource_types
+      example: umbrella.source.ip_address
+      type: string
+    attributeNameSourceComposite:
+      description: The name of the attributes for the composite source components.
+      enum:
+      - umbrella.source.ip_address
+      example: umbrella.source.ip_address
+      type: string
+    attributeNameDestination:
+      description: The name of the attribute for the source components.
+      enum:
+      - umbrella.destination.all
+      - umbrella.destination.networkObjectIds
+      - umbrella.destination.networkObjectGroupIds
+      - umbrella.destination.serviceObjectIds
+      - umbrella.destination.serviceObjectGroupIds
+      - umbrella.destination.application_ids
+      - umbrella.destination.application_list_ids
+      - umbrella.destination.private_application_ids
+      - umbrella.destination.private_application_group_ids
+      - umbrella.destination.category_ids
+      - umbrella.destination.category_list_ids
+      - umbrella.destination.destination_list_ids
+      - umbrella.destination.geolocations
+      - umbrella.destination.private_resource_ids
+      example: umbrella.destination.private_application_ids
+      type: string
+    attributeNameDestinationComposite:
+      description: The name of the attribute for the source components.
+      enum:
+      - umbrella.destination.ip_address
+      - umbrella.destination.port
+      - umbrella.destination.network_protocol
+      example: umbrella.destination.ip_address
+      type: string
+    attributeName:
+      anyOf:
+      - $ref: '#/components/schemas/attributeNameSource'
+      - $ref: '#/components/schemas/attributeNameSourceComposite'
+      - $ref: '#/components/schemas/attributeNameDestination'
+      - $ref: '#/components/schemas/attributeNameDestinationComposite'
+      description: The name of the attribute.
+      example: umbrella.destination.private_application_ids
+    attributeOperator:
+      description: The operator that can act on the attribute.
+      enum:
+      - =
+      - INTERSECT
+      - IN
+      example: INTERSECT
+      type: string
+    ruleConditions:
+      description: The list of conditions that are set on the rule. Updates to "ReadOnly"
+        attributes are ignored.
+      example:
+      - attributeName: umbrella.destination.private_application_ids
+        attributeValue:
+        - 12345
+        - 34
+        attributeOperator: INTERSECT
+      items:
+        $ref: '#/components/schemas/ruleConditions_inner'
+      type: array
+    organizationId:
+      description: The ID of the organization.
+      example: 987456
+      readOnly: true
+      type: integer
+    createdAtRule:
+      description: The date and time that the rule was created.
+      example: 2021-12-13T16:07:07.222Z
+      readOnly: true
+      type: string
+    modifiedAtRule:
+      description: The date and time that the rule was modified.
+      example: 2023-11-13T21:28:54+00:00
+      readOnly: true
+      type: string
+    createdAtSetting:
+      description: The date and time that the rule was created.
+      example: 2021-12-13T16:07:07.222Z
+      readOnly: true
+      type: string
+    modifiedAtSetting:
+      description: The date and time that the rule was modified.
+      readOnly: true
+      type: string
+    createdAtApplicationList:
+      description: The date and time that the application list was created.
+      example: 2021-12-13T16:07:07.222Z
+      readOnly: true
+      type: string
+    modifiedAtApplicationList:
+      description: The date and time that the application list was modified.
+      example: 2023-11-13T21:28:54+00:00
+      readOnly: true
+      type: string
+    createdAtRuleSetting:
+      description: The date and time that the rule setting was created.
+      example: 2021-12-13T16:07:07.222Z
+      readOnly: true
+      type: string
+    modifiedAtRuleSetting:
+      description: The date and time that the rule setting was modified.
+      example: 2023-11-13T21:28:54+00:00
+      readOnly: true
+      type: string
+    SettingsRequest:
+      description: The list of properties for the policy rule settings.
+      example:
+      - settingName: sse.decryption.logPrivate
+        settingValue: true
+      items:
+        $ref: '#/components/schemas/SettingsRequest_inner'
+      type: array
+    SettingsRequestObject:
+      description: The name and value of the setting.
+      example:
+        settingName: umbrella.logLevel
+        settingValue: LOG_NONE
+      properties:
+        settingName:
+          $ref: '#/components/schemas/settingName'
+        settingValue:
+          $ref: '#/components/schemas/settingValue'
+      type: object
+    SettingResponse:
+      description: The properties of the policy settings.
+      example:
+      - createdAt: 2024-03-26T18:54:45+00:00
+        settingName: sse.decryption.logInternet
+        settingValue: false
+        modifiedAt: 2024-03-26T18:54:45+00:00
+      - createdAt: 2024-03-26T18:54:45+00:00
+        settingName: sse.decryption.logPrivate
+        settingValue: false
+        modifiedAt: 2024-03-26T18:54:45+00:00
+      - createdAt: 2024-03-26T18:54:45+00:00
+        settingName: sse.globalIPSEnabled
+        settingValue: true
+        modifiedAt: 2024-03-26T18:54:45+00:00
+      - createdAt: 2024-02-05T09:13:56+00:00
+        settingName: sse.tenantControlProfileId
+        settingValue: 19383
+        modifiedAt: 2024-02-05T09:13:56+00:00
+      items:
+        $ref: '#/components/schemas/SettingResponse_inner'
+      type: array
+    SettingsResponseObject:
+      description: The properties of the rule setting.
+      example:
+        settingName: sse.decryption.logPrivate
+        settingValue: true
+        createdAt: 2024-03-26T18:54:45+00:00
+        modifiedAt: 2024-02-05T09:13:56+00:00
+      properties:
+        settingName:
+          $ref: '#/components/schemas/settingName'
+        settingValue:
+          $ref: '#/components/schemas/settingValue'
+        createdAt:
+          description: The date and time that the rule setting was created.
+          example: 2021-12-13T16:07:07.222Z
+          readOnly: true
+          type: string
+        modifiedAt:
+          description: The date and time that the rule setting was modified.
+          example: 2023-11-13T21:28:54+00:00
+          readOnly: true
+          type: string
+      required:
+      - createdAt
+      - modifiedAt
+      - settingName
+      - settingValue
+      type: object
+    SettingsResponse:
+      description: The list of policy rule settings.
+      example:
+      - settingName: sse.decryption.logPrivate
+        settingValue: true
+      items:
+        $ref: '#/components/schemas/SettingsResponse_inner'
+      type: array
+    SettingTypesResponse:
+      description: The list of policy setting types.
+      items:
+        $ref: '#/components/schemas/SettingTypesResponse_inner'
+      type: array
+    RuleFilters:
+      additionalProperties:
+        $ref: '#/components/schemas/RuleFilters_value'
+      description: |-
+        Filter the rules by the rule properties.
+        **Note:** You can filter on either `ruleConditions` or the set of `sources` and `destinations` properties, but not both sets of properties.
+      example:
+        destinations:
+        - umbrella.destination.destination_list_ids: '*'
+        sources:
+        - umbrella.source.identity_ids: '*'
+        rulePriority: "1,2,3"
+        ruleAction: allow
+      properties:
+        ruleName:
+          description: |-
+            The name of the rule. The name must be unique across all rules for the organization's policy.
+            The name can have no more than 256 characters.
+          example: SSE Rule 1
+          maxLength: 256
+          type: string
+        ruleDescription:
+          description: The meaningful information about the rule. The description
+            can have no more than 256 characters.
+          example: The rule for the London office.
+          maxLength: 256
+          type: string
+        ruleIsEnabled:
+          description: Specifies whether the rule is enabled.
+          example: true
+          type: boolean
+        ruleIsDefault:
+          description: Specifies whether the rule is the default rule.
+          example: true
+          type: boolean
+        ruleAction:
+          $ref: '#/components/schemas/ruleAction'
+        attributeName:
+          $ref: '#/components/schemas/attributeName'
+        attributeValue:
+          $ref: '#/components/schemas/attributeValue'
+        settingName:
+          $ref: '#/components/schemas/settingName'
+        settingValue:
+          $ref: '#/components/schemas/settingValue'
+        rulePriority:
+          description: |-
+            Filter on the priorities of the rules.
+            Provide a comma-separated string of integers that correspond to the priorities of your rules.
+          example: "1,2,3"
+          type: string
+      type: object
+    RuleSourceDestFilters:
+      description: The source and destination properties. Use these properties to
+        filter your collection of rules.
+      example:
+        sources:
+        - umbrella.source.identity_type_id: 3
+        destinations:
+        - umbrella.destination.private_resource_ids: '*'
+      properties:
+        sources:
+          description: The list of sources to filter your collection of rules.
+          items:
+            $ref: '#/components/schemas/RuleFilterSourcesExample'
+          type: array
+        destinations:
+          description: The list of destinations to filter your collection of rules.
+          items:
+            $ref: '#/components/schemas/RuleFilterDestinationsExample'
+          type: array
+      type: object
+    RuleFilterDestinationsExample:
+      additionalProperties:
+        $ref: '#/components/schemas/RuleFilterDestinationsExample_value'
+      description: Filter on the property and value of the destination.
+      example:
+        umbrella.destination.private_resource_ids: '*'
+      type: object
+    RuleFilterSourcesExample:
+      additionalProperties:
+        $ref: '#/components/schemas/RuleFilterSourcesExample_value'
+      description: Filter on the property and value of the source.
+      example:
+        umbrella.source.identity_ids: '*'
+      type: object
+    RulesResponse:
+      description: The list of rules in the policy.
+      example:
+      - organizationId: 8094936
+        ruleIsDefault: false
+        modifiedAt: 2024-04-01T19:42:38
+        rulePriority: 9
+        ruleId: 591710
+        ruleIsEnabled: false
+        ruleDescription: Rule Created by Policy Assistant
+        ruleName: Rule 31 Created by Cisco Assistant
+        modifiedBy: service/chatgpt.policy-api/key/1
+        createdAt: 2024-03-28T18:17:36
+        ruleAction: allow
+      items:
+        $ref: '#/components/schemas/RulesResponse_inner'
+      type: array
+    applicationCategoryIds:
+      description: The list of IDs for the application categories.
+      example:
+      - 353546
+      items:
+        description: The ID of the application category.
+        example: 1235
+        type: integer
+      type: array
+    applicationId:
+      description: The ID of the application.
+      example: 2453454
+      type: integer
+    applicationIds:
+      description: The list of IDs for the applications.
+      example:
+      - 1345
+      - 4666
+      items:
+        $ref: '#/components/schemas/applicationId'
+      type: array
+    applicationListId:
+      description: The ID of the application list.
+      example: 1235
+      type: integer
+    applicationListName:
+      description: The descriptive label for the application list.
+      example: Application lists on branch_1.
+      type: string
+    isDefault:
+      description: Specifies whether the application list is the default application
+        list.
+      example: false
+      type: boolean
+    Rules:
+      description: The rules in the organization's policy.
+      example:
+        count: 1
+        result:
+        - modifiedAt: 2024-04-01T19:42:38
+          ruleAccess: internet
+          ruleIsDefault: false
+          rulePriority: 9
+          ruleName: Rule 31 Created by Cisco Assistant
+          ruleId: 591710
+          ruleIsEnabled: false
+          ruleDescription: Rule Created by Policy Assistant
+          modifiedBy: service/chatgpt.policy-api/key/1
+          createdAt: 2024-03-28T18:17:36
+          ruleAction: allow
+      properties:
+        count:
+          description: The number of rules in the policy.
+          example: 100
+          type: integer
+        result:
+          description: The list of rules in the policy.
+          example:
+          - organizationId: 8094936
+            ruleIsDefault: false
+            modifiedAt: 2024-04-01T19:42:38
+            rulePriority: 9
+            ruleId: 591710
+            ruleIsEnabled: false
+            ruleDescription: Rule Created by Policy Assistant
+            ruleName: Rule 31 Created by Cisco Assistant
+            modifiedBy: service/chatgpt.policy-api/key/1
+            createdAt: 2024-03-28T18:17:36
+            ruleAction: allow
+          items:
+            $ref: '#/components/schemas/RulesResponse_inner'
+          type: array
+      type: object
+    Rule:
+      description: |-
+        The properties of the access rule that enables security for the traffic that is described on the rule.
+        The rule includes the actions, settings, and conditions configured on the rule and when these attributes
+        were created or modified.
+      example:
+        ruleSettings:
+        - createdAt: 2024-03-26T18:54:45+00:00
+          settingName: sse.decryption.logInternet
+          settingValue: false
+          modifiedAt: 2024-03-26T18:54:45+00:00
+        - createdAt: 2024-03-26T18:54:45+00:00
+          settingName: sse.decryption.logPrivate
+          settingValue: false
+          modifiedAt: 2024-03-26T18:54:45+00:00
+        - createdAt: 2024-03-26T18:54:45+00:00
+          settingName: sse.globalIPSEnabled
+          settingValue: true
+          modifiedAt: 2024-03-26T18:54:45+00:00
+        - createdAt: 2024-02-05T09:13:56+00:00
+          settingName: sse.tenantControlProfileId
+          settingValue: 19383
+          modifiedAt: 2024-02-05T09:13:56+00:00
+        modifiedAt: 2023-11-13T21:28:54+00:00
+        ruleIsEnabled: true
+        ruleDescription: The rule for the London office.
+        ruleIsDefault: true
+        organizationId: 987456
+        ruleAction: allow
+        createdAt: 2021-12-13T16:07:07.222Z
+        ruleName: SSE Rule 1
+        modifiedBy: org/1234/user/123453
+        ruleId: 183456
+        ruleConditions:
+        - attributeName: umbrella.destination.private_application_ids
+          attributeValue:
+          - 12345
+          - 34
+          attributeOperator: INTERSECT
+        rulePriority: 1
+      properties:
+        organizationId:
+          description: The ID of the organization.
+          example: 987456
+          readOnly: true
+          type: integer
+        ruleId:
+          description: The ID of the rule.
+          example: 183456
+          readOnly: true
+          type: integer
+        ruleName:
+          description: |-
+            The name of the rule. The name must be unique across all rules for the organization's policy.
+            The name can have no more than 256 characters.
+          example: SSE Rule 1
+          maxLength: 256
+          type: string
+        ruleDescription:
+          description: The meaningful information about the rule. The description
+            can have no more than 256 characters.
+          example: The rule for the London office.
+          maxLength: 256
+          type: string
+        ruleAction:
+          $ref: '#/components/schemas/ruleAction'
+        rulePriority:
+          description: |-
+            The positive integer that represents the priority of the rule.
+            The priority is unique across all rules on the policy for the organization.
+          example: 1
+          type: integer
+        ruleIsDefault:
+          description: Specifies whether the rule is the default rule.
+          example: true
+          type: boolean
+        ruleIsEnabled:
+          description: Specifies whether the rule is enabled.
+          example: true
+          type: boolean
+        ruleConditions:
+          description: The list of conditions that are set on the rule. Updates to
+            "ReadOnly" attributes are ignored.
+          example:
+          - attributeName: umbrella.destination.private_application_ids
+            attributeValue:
+            - 12345
+            - 34
+            attributeOperator: INTERSECT
+          items:
+            $ref: '#/components/schemas/ruleConditions_inner'
+          type: array
+        ruleSettings:
+          description: The properties of the policy settings.
+          example:
+          - createdAt: 2024-03-26T18:54:45+00:00
+            settingName: sse.decryption.logInternet
+            settingValue: false
+            modifiedAt: 2024-03-26T18:54:45+00:00
+          - createdAt: 2024-03-26T18:54:45+00:00
+            settingName: sse.decryption.logPrivate
+            settingValue: false
+            modifiedAt: 2024-03-26T18:54:45+00:00
+          - createdAt: 2024-03-26T18:54:45+00:00
+            settingName: sse.globalIPSEnabled
+            settingValue: true
+            modifiedAt: 2024-03-26T18:54:45+00:00
+          - createdAt: 2024-02-05T09:13:56+00:00
+            settingName: sse.tenantControlProfileId
+            settingValue: 19383
+            modifiedAt: 2024-02-05T09:13:56+00:00
+          items:
+            $ref: '#/components/schemas/SettingResponse_inner'
+          type: array
+        modifiedBy:
+          description: A string that includes the organization ID and user ID for
+            the account that modified the access rule.
+          example: org/1234/user/123453
+          type: string
+        modifiedAt:
+          description: The date and time that the rule was modified.
+          example: 2023-11-13T21:28:54+00:00
+          readOnly: true
+          type: string
+        createdAt:
+          description: The date and time that the rule was created.
+          example: 2021-12-13T16:07:07.222Z
+          readOnly: true
+          type: string
+      type: object
+    ApplicationLists:
+      description: The application lists and number of application lists in the organization.
+      example:
+        count: 250
+        results:
+        - modifiedAt: 2024-04-04T19:22:53+00:00
+          applicationListName: New Application List- empty
+          organizationId: 8094936
+          createdAt: 2024-04-04T19:22:53+00:00
+          applicationListId: 19457
+          isDefault: false
+        - modifiedAt: 2024-04-04T19:23:17+00:00
+          applicationListName: New Application List empty
+          organizationId: 8094936
+          createdAt: 2024-04-04T19:23:17+00:00
+          applicationListId: 19458
+          isDefault: false
+        - modifiedAt: 2023-04-10T12:17:03+00:00
+          applicationListName: this is a custom list
+          organizationId: 8094936
+          createdAt: 2023-03-28T20:32:05+00:00
+          applicationListId: 14148
+          isDefault: false
+      properties:
+        count:
+          description: The number of application lists in the organization.
+          example: 250
+          type: integer
+        result:
+          description: The application lists in the organization.
+          example:
+          - modifiedAt: 2024-04-04T19:22:53+00:00
+            applicationListName: New Application List- empty
+            organizationId: 8094936
+            createdAt: 2024-04-04T19:22:53+00:00
+            applicationListId: 19457
+            isDefault: false
+          items:
+            $ref: '#/components/schemas/ApplicationLists_result_inner'
+          type: array
+      type: object
+    ApplicationList:
+      description: The properties of the application list.
+      example:
+        applicationCategoryIds: []
+        applicationIds: []
+        applicationListName: New Application List- empty
+        isDefault: false
+        createdAt: 2024-04-04T19:23:17+00:00
+        modifiedAt: 2023-04-10T12:17:03+00:00
+      properties:
+        applicationListName:
+          description: The descriptive label for the application list.
+          example: Application lists on branch_1.
+          type: string
+        isDefault:
+          description: Specifies whether the application list is the default application
+            list.
+          example: false
+          type: boolean
+        applicationIds:
+          description: The list of IDs for the applications.
+          example:
+          - 1345
+          - 4666
+          items:
+            $ref: '#/components/schemas/applicationId'
+          type: array
+        applicationCategoryIds:
+          description: The list of IDs for the application categories.
+          example:
+          - 353546
+          items:
+            description: The ID of the application category.
+            example: 1235
+            type: integer
+          type: array
+        createdAt:
+          description: The date and time that the application list was created.
+          example: 2021-12-13T16:07:07.222Z
+          readOnly: true
+          type: string
+        modifiedAt:
+          description: The date and time that the application list was modified.
+          example: 2023-11-13T21:28:54+00:00
+          readOnly: true
+          type: string
+      type: object
+    ApplicationListRequest:
+      description: The properties for the application list.
+      example:
+        applicationCategoryIds: []
+        applicationIds: []
+        applicationListName: New Application List- empty
+        isDefault: false
+      properties:
+        applicationListName:
+          description: The descriptive label for the application list.
+          example: Application lists on branch_1.
+          type: string
+        isDefault:
+          description: Specifies whether the application list is the default application
+            list.
+          example: false
+          type: boolean
+        applicationIds:
+          description: The list of IDs for the applications.
+          example:
+          - 1345
+          - 4666
+          items:
+            $ref: '#/components/schemas/applicationId'
+          type: array
+        applicationCategoryIds:
+          description: The list of IDs for the application categories.
+          example:
+          - 353546
+          items:
+            description: The ID of the application category.
+            example: 1235
+            type: integer
+          type: array
+      required:
+      - applicationIds
+      - applicationListName
+      - isDefault
+      type: object
+    ApplicationUsageResponse:
+      description: |-
+        The list of application usage information.
+        The application usage information describes the relationships between the application and its application lists and access rules.
+      example:
+      - applicationId: 40
+        usedBy:
+          applicationLists:
+          - applicationListId: 15316
+            applicationListName: All Application Selection 3k
+            applicationIds:
+            - 40
+            - 43
+            isRuleAssociated: true
+            usedByRules: []
+          - applicationListId: 14803
+            applicationListName: New Application List - 123
+            applicationIds:
+            - 40
+            - 43
+            isRuleAssociated: true
+            usedByRules: []
+      - applicationId: 43
+        usedBy:
+          applicationLists:
+          - applicationListId: 15316
+            applicationListName: All Application Selection 3k
+            applicationIds:
+            - 40
+            - 43
+            isRuleAssociated: false
+            usedByRules: []
+          - applicationListId: 14803
+            applicationListName: New Application List - 123
+            applicationIds:
+            - 40
+            - 43
+            isRuleAssociated: false
+            usedByRules: []
+      items:
+        $ref: '#/components/schemas/ApplicationUsageResponse_inner'
+      type: array
+    Regions:
+      description: The information about the regions that you can apply to the traffic
+        on internet access rules.
+      example:
+        results:
+        - continentName: South America
+          countries:
+          - countryName: Argentina
+            countryCode: AR
+          - countryName: Brazil
+            countryCode: BR
+        - continentName: Asia
+          countries:
+          - countryName: India
+            countryCode: IN
+          - countryName: Malaysia
+            countryCode: MY
+      properties:
+        results:
+          description: The list of geolocation information for the continents and
+            countries.
+          example:
+          - continentName: South America
+            countries:
+            - countryName: Argentina
+              countryCode: AR
+            - countryName: Brazil
+              countryCode: BR
+          items:
+            $ref: '#/components/schemas/Regions_results_inner'
+          type: array
+      type: object
+    getApplicationLists_400_response:
+      example:
+        requestId: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+        error: The organization ID is a numeric value.
+      properties:
+        error:
+          description: Error message explaining the reason for failure.
+          example: The organization ID is a numeric value.
+          type: string
+        requestId:
+          description: The ID of the request.
+          example: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+          type: string
+      type: object
+    getApplicationLists_401_response:
+      example:
+        requestId: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+        error: Authorization token is invalid.
+      properties:
+        error:
+          description: Error message explaining the reason for failure.
+          example: Authorization token is invalid.
+          type: string
+        requestId:
+          description: The ID of the request.
+          example: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+          type: string
+      type: object
+    getApplicationLists_403_response:
+      example:
+        requestId: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+        error: Not Authorized
+      properties:
+        error:
+          description: Error message explaining the reason for failure.
+          example: Not Authorized
+          type: string
+        requestId:
+          description: The ID of the request.
+          example: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+          type: string
+      type: object
+    getApplicationLists_404_response:
+      example:
+        requestId: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+        error: Not Found
+      properties:
+        error:
+          description: Error message explaining the reason for failure.
+          example: Not Found
+          type: string
+        requestId:
+          description: The ID of the request.
+          example: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+          type: string
+      type: object
+    getApplicationLists_500_response:
+      example:
+        requestId: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+        error: Internal Server Error
+      properties:
+        error:
+          description: Error message explaining the reason for failure.
+          example: Internal Server Error
+          type: string
+        requestId:
+          description: The ID of the request.
+          example: 7d318524-d5a4-4fd8-8b29-ad295b2f035b
+          type: string
+      type: object
+    putRules_request_properties_inner:
+      description: Set the `ruleIsEnabled` property on the rule.
+      example:
+        ruleIsEnabled: false
+      properties:
+        ruleIsEnabled:
+          description: Specifies whether the rule is enabled.
+          example: true
+          type: boolean
+      type: object
+    putRules_request:
+      description: Set the `ruleIsEnabled` property on the rules.
+      properties:
+        ruleIds:
+          description: The list of rule IDs for the rules. Set the `rulesIsEnabled`
+            property on these rules.
+          example:
+          - 591713
+          - 591710
+          items:
+            $ref: '#/components/schemas/ruleId'
+          type: array
+        properties:
+          description: The list of the `ruleIsEnabled` setting for the rules.
+          example:
+            properties:
+            - ruleIsEnabled: true
+          items:
+            $ref: '#/components/schemas/putRules_request_properties_inner'
+          type: array
+      required:
+      - properties
+      - ruleIds
+      type: object
+    addRule_request:
+      description: The properties of the rule.
+      properties:
+        ruleName:
+          description: |-
+            The name of the rule. The name must be unique across all rules for the organization's policy.
+            The name can have no more than 256 characters.
+          example: SSE Rule 1
+          maxLength: 256
+          type: string
+        ruleDescription:
+          description: The meaningful information about the rule. The description
+            can have no more than 256 characters.
+          example: The rule for the London office.
+          maxLength: 256
+          type: string
+        ruleAction:
+          $ref: '#/components/schemas/ruleAction'
+        rulePriority:
+          description: |-
+            The positive integer that represents the priority of the rule.
+            The priority is unique across all rules on the policy for the organization.
+          example: 1
+          type: integer
+        ruleIsEnabled:
+          description: Specifies whether the rule is enabled.
+          example: true
+          type: boolean
+        ruleConditions:
+          description: The list of conditions that are set on the rule. Updates to
+            "ReadOnly" attributes are ignored.
+          example:
+          - attributeName: umbrella.destination.private_application_ids
+            attributeValue:
+            - 12345
+            - 34
+            attributeOperator: INTERSECT
+          items:
+            $ref: '#/components/schemas/ruleConditions_inner'
+          type: array
+        ruleSettings:
+          description: The list of settings on a rule.
+          example:
+          - settingName: sse.decryption.logInternet
+            settingValue: false
+          items:
+            $ref: '#/components/schemas/ruleSettings_inner'
+          type: array
+      required:
+      - ruleAction
+      - ruleConditions
+      - ruleName
+      - ruleSettings
+      type: object
+    putRule_request:
+      description: The properties of the rule.
+      properties:
+        ruleName:
+          description: |-
+            The name of the rule. The name must be unique across all rules for the organization's policy.
+            The name can have no more than 256 characters.
+          example: SSE Rule 1
+          maxLength: 256
+          type: string
+        ruleDescription:
+          description: The meaningful information about the rule. The description
+            can have no more than 256 characters.
+          example: The rule for the London office.
+          maxLength: 256
+          type: string
+        ruleAction:
+          $ref: '#/components/schemas/ruleAction'
+        rulePriority:
+          description: |-
+            The positive integer that represents the priority of the rule.
+            The priority is unique across all rules on the policy for the organization.
+          example: 1
+          type: integer
+        ruleIsEnabled:
+          description: Specifies whether the rule is enabled.
+          example: true
+          type: boolean
+        ruleConditions:
+          description: The list of conditions that are set on the rule. Updates to
+            "ReadOnly" attributes are ignored.
+          example:
+          - attributeName: umbrella.destination.private_application_ids
+            attributeValue:
+            - 12345
+            - 34
+            attributeOperator: INTERSECT
+          items:
+            $ref: '#/components/schemas/ruleConditions_inner'
+          type: array
+        ruleSettings:
+          description: The list of settings on a rule.
+          example:
+          - settingName: sse.decryption.logInternet
+            settingValue: false
+          items:
+            $ref: '#/components/schemas/ruleSettings_inner'
+          type: array
+      required:
+      - ruleAction
+      - ruleConditions
+      - ruleName
+      - rulePriority
+      - ruleSettings
+      type: object
+    ruleSettings_inner:
+      example:
+        settingName: sse.decryption.logInternet
+        settingValue: false
+      properties:
+        settingName:
+          $ref: '#/components/schemas/settingName'
+        settingValue:
+          $ref: '#/components/schemas/settingValue'
+      type: object
+    ruleConditions_inner:
+      description: |-
+        The attributes created on the rule. The conditions include the name of the attribute, the value of the attribute, and the operator
+        that is applied to the rule condition.
+      properties:
+        attributeName:
+          $ref: '#/components/schemas/attributeName'
+        attributeValue:
+          $ref: '#/components/schemas/attributeValue'
+        attributeOperator:
+          $ref: '#/components/schemas/attributeOperator'
+      type: object
+    SettingsRequest_inner:
+      description: The name and value of the setting.
+      properties:
+        settingName:
+          $ref: '#/components/schemas/settingName'
+        settingValue:
+          $ref: '#/components/schemas/settingValue'
+      type: object
+    SettingResponse_inner:
+      properties:
+        settingValue:
+          $ref: '#/components/schemas/settingValue'
+        settingName:
+          $ref: '#/components/schemas/settingName'
+        createdAt:
+          description: The date and time that the rule setting was created.
+          example: 2021-12-13T16:07:07.222Z
+          readOnly: true
+          type: string
+        modifiedAt:
+          description: The date and time that the rule setting was modified.
+          example: 2023-11-13T21:28:54+00:00
+          readOnly: true
+          type: string
+      type: object
+    SettingsResponse_inner:
+      properties:
+        settingName:
+          $ref: '#/components/schemas/settingName'
+        settingValue:
+          $ref: '#/components/schemas/settingValue'
+        createdAt:
+          description: The date and time that the rule was created.
+          example: 2021-12-13T16:07:07.222Z
+          readOnly: true
+          type: string
+        modifiedAt:
+          description: The date and time that the rule was modified.
+          readOnly: true
+          type: string
+        settingId:
+          type: integer
+        isGlobal:
+          type: boolean
+      required:
+      - createdAt
+      - isGlobal
+      - modifiedAt
+      - settingId
+      - settingName
+      - settingValue
+      type: object
+    SettingTypesResponse_inner:
+      example:
+        settingForRulesets: false
+        settingForRules: false
+        typeDefaultValue: false
+        settingDescription: Bypass for decryption.
+        typeName: integer
+        typeDescription: boolean
+        serviceScopes: []
+        settingForOrganizations: false
+        settingId: 12355
+        settingName: umbrella.logLevel
+        typeValidationRegex: typeValidationRegex
+      properties:
+        serviceScopes:
+          description: The list of services that are related to the policy setting
+            type.
+          example: []
+          items:
+            type: string
+          type: array
+        settingForRulesets:
+          description: Specify whether the setting is for the rulesets.
+          example: false
+          type: boolean
+        settingId:
+          description: The ID of the setting.
+          example: 12355
+          type: integer
+        settingName:
+          $ref: '#/components/schemas/settingName'
+        typeDescription:
+          description: The type of the setting description.
+          enum:
+          - boolean
+          - integer
+          example: boolean
+          type: string
+        typeName:
+          description: The type of the setting name.
+          enum:
+          - boolean
+          - integer
+          example: integer
+          type: string
+        typeDefaultValue:
+          description: Specifiy whether the setting has the default value.
+          example: false
+          type: boolean
+        settingDescription:
+          description: The description of the access rule setting.
+          example: Bypass for decryption.
+          type: string
+        typeValidationRegex:
+          description: The regex pattern for validating the type.
+          type: string
+        settingForRules:
+          description: Specify whether the setting is for the rules.
+          example: false
+          type: boolean
+        settingForOrganizations:
+          description: Specify whether the setting is for the organization.
+          example: false
+          type: boolean
+      type: object
+    RuleFilters_value:
+      oneOf:
+      - $ref: '#/components/schemas/ruleConditions'
+      - $ref: '#/components/schemas/RuleSourceDestFilters'
+    RuleFilterDestinationsExample_value:
+      oneOf:
+      - type: string
+    RuleFilterSourcesExample_value:
+      oneOf:
+      - type: string
+      - type: integer
+    RulesResponse_inner:
+      description: The core properties of the rule.
+      properties:
+        organizationId:
+          description: The ID of the organization.
+          example: 987456
+          readOnly: true
+          type: integer
+        ruleId:
+          description: The ID of the rule.
+          example: 183456
+          readOnly: true
+          type: integer
+        ruleName:
+          description: |-
+            The name of the rule. The name must be unique across all rules for the organization's policy.
+            The name can have no more than 256 characters.
+          example: SSE Rule 1
+          maxLength: 256
+          type: string
+        ruleDescription:
+          description: The meaningful information about the rule. The description
+            can have no more than 256 characters.
+          example: The rule for the London office.
+          maxLength: 256
+          type: string
+        ruleAction:
+          $ref: '#/components/schemas/ruleAction'
+        rulePriority:
+          description: |-
+            The positive integer that represents the priority of the rule.
+            The priority is unique across all rules on the policy for the organization.
+          example: 1
+          type: integer
+        ruleIsDefault:
+          description: Specifies whether the rule is the default rule.
+          example: true
+          type: boolean
+        ruleIsEnabled:
+          description: Specifies whether the rule is enabled.
+          example: true
+          type: boolean
+        modifiedBy:
+          description: A string that includes the organization ID and user ID for
+            the account that modified the access rule.
+          example: org/1234/user/123453
+          type: string
+        modifiedAt:
+          description: The date and time that the rule was modified.
+          example: 2023-11-13T21:28:54+00:00
+          readOnly: true
+          type: string
+        createdAt:
+          description: The date and time that the rule was created.
+          example: 2021-12-13T16:07:07.222Z
+          readOnly: true
+          type: string
+      required:
+      - ruleId
+      type: object
+    ApplicationLists_result_inner:
+      description: The properties of the application list.
+      example:
+        modifiedAt: 2024-04-04T19:22:53+00:00
+        applicationListName: New Application List- empty
+        organizationId: 8094936
+        createdAt: 2024-04-04T19:22:53+00:00
+        applicationListId: 19457
+        isDefault: false
+      properties:
+        applicationListId:
+          description: The ID of the application list.
+          example: 1235
+          type: integer
+        applicationListName:
+          description: The descriptive label for the application list.
+          example: Application lists on branch_1.
+          type: string
+        isDefault:
+          description: Specifies whether the application list is the default application
+            list.
+          example: false
+          type: boolean
+        createdAt:
+          description: The date and time that the application list was created.
+          example: 2021-12-13T16:07:07.222Z
+          readOnly: true
+          type: string
+        modifiedAt:
+          description: The date and time that the application list was modified.
+          example: 2023-11-13T21:28:54+00:00
+          readOnly: true
+          type: string
+      type: object
+    ApplicationUsageResponse_inner_usedBy_applicationLists_inner:
+      description: The properties of the application List.
+      example:
+        applicationListId: 134
+        usedByRules:
+        - 13456
+        - 45455
+        applicationListName: The name of the application list.
+        applicationIds:
+        - 40
+        - 43
+        isRuleAssociated: true
+      properties:
+        applicationListId:
+          description: The ID of the application list.
+          example: 1235
+          type: integer
+        usedByRules:
+          description: The list of rule IDs that include the applications.
+          example:
+          - 13434
+          - 55666
+          items:
+            description: The ID of the rule.
+            example: 13455
+            type: integer
+          type: array
+        applicationListName:
+          description: The descriptive label for the application list.
+          example: Application lists on branch_1.
+          type: string
+        applicationIds:
+          description: The list of IDs for the applications.
+          example:
+          - 1345
+          - 4666
+          items:
+            $ref: '#/components/schemas/applicationId'
+          type: array
+        isRuleAssociated:
+          description: Specifies whether the application list is associated with a
+            rule.
+          example: false
+          type: boolean
+      type: object
+    ApplicationUsageResponse_inner_usedBy:
+      description: The properties of the application lists that include the applications.
+      example:
+        applicationLists:
+        - applicationListId: 134
+          usedByRules:
+          - 13456
+          - 45455
+          applicationListName: The name of the application list.
+          applicationIds:
+          - 40
+          - 43
+          isRuleAssociated: true
+      properties:
+        applicationLists:
+          description: The list of application list information.
+          example:
+          - applicationListId: 134
+            usedByRules:
+            - 13456
+            - 45455
+            applicationListName: The name of the application list.
+            applicationIds:
+            - 40
+            - 43
+            isRuleAssociated: true
+          items:
+            $ref: '#/components/schemas/ApplicationUsageResponse_inner_usedBy_applicationLists_inner'
+          type: array
+      type: object
+    ApplicationUsageResponse_inner:
+      description: The information about the application usage.
+      example:
+        applicationId: 40
+        usedBy:
+          applicationLists:
+          - applicationListId: 134
+            usedByRules:
+            - 13456
+            - 45455
+            applicationListName: The name of the application list.
+            applicationIds:
+            - 40
+            - 43
+            isRuleAssociated: true
+      properties:
+        applicationId:
+          description: The ID of the application.
+          example: 2453454
+          type: integer
+        usedBy:
+          $ref: '#/components/schemas/ApplicationUsageResponse_inner_usedBy'
+      type: object
+    Regions_results_inner_countries_inner:
+      description: The properties of the country. Includes the country name and code.
+      properties:
+        countryName:
+          description: The name of the country.
+          example: India
+          type: string
+        countryCode:
+          description: The two-character code for the country.
+          example: IN
+          type: string
+      type: object
+    Regions_results_inner:
+      description: The properties of the region.
+      example:
+        continentName: Asia
+        countries:
+        - countryName: India
+          countryCode: IN
+        - countryName: Malaysia
+          countryCode: MY
+      properties:
+        continentName:
+          description: The name of the continent.
+          type: string
+        countries:
+          description: The list of countries in the continent.
+          items:
+            $ref: '#/components/schemas/Regions_results_inner_countries_inner'
+          type: array
+      type: object
+  securitySchemes:
+    oauthFlow:
+      description: client credential flow
+      flows:
+        clientCredentials:
+          scopes:
+            policies.applicationlists:write: Write policies application lists
+            policies.applicationlists:read: Read policies application lists
+            policies.settings:write: Write policies global rule settings
+            policies.settings:read: Read policies global rule settings
+            policies.rules:read: Read policies access rules
+            policies.rules:write: Write policies access rules
+          tokenUrl: https://api.sse.cisco.com/auth/v2/token
+      type: oauth2
