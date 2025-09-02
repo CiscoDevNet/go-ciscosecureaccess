@@ -29,11 +29,11 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/destinationlists"
 )
 
 func main() {
-	destinationListCreate := *openapiclient.NewDestinationListCreate("none", false, "Global Allow list") // DestinationListCreate | Provide destination information and an optional array of destination objects. * Accepts no more than 500 destination objects. * Does not support global destination lists. You must set the `isGlobal` field to `false`. * Does not support an access type. Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`. * You must set the `bundleTypeId` to `2`. Web profiles are applied on your policy rules.  If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list, the operation may succeed (`HTTP/200 OK`). However, the server returns an error message (`HTTP/400 Bad Request`) that indicates that the destination is on a high-volume domain. **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only.
+	destinationListCreate := *openapiclient.NewDestinationListCreate(openapiclient.access("allow"), false, "Global Allow list") // DestinationListCreate | Provide destination information and an optional array of destination objects. * In the API request, accepts no more than 500 destination objects in the destination list. * Does not support global destination lists. You must set the `isGlobal` field to `false`. * You cannot use the Destination Lists API to create a destination list with the `access` type of `thirdparty_block`. * You must set the `bundleTypeId` to `2`. Web profiles are applied on your policy rules.  If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list, the operation may succeed (`HTTP/200 OK`). However, the server returns an error message (`HTTP/400 Bad Request`) that indicates that the destination is on a high-volume domain. **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -58,7 +58,7 @@ Other parameters are passed through a pointer to a apiCreateDestinationListReque
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **destinationListCreate** | [**DestinationListCreate**](DestinationListCreate.md) | Provide destination information and an optional array of destination objects. * Accepts no more than 500 destination objects. * Does not support global destination lists. You must set the &#x60;isGlobal&#x60; field to &#x60;false&#x60;. * Does not support an access type. Valid values are: &#x60;allow&#x60;, &#x60;block&#x60;, &#x60;url_proxy&#x60;, &#x60;no_decrypt&#x60;, &#x60;warn&#x60;, or &#x60;none&#x60;. * You must set the &#x60;bundleTypeId&#x60; to &#x60;2&#x60;. Web profiles are applied on your policy rules.  If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list, the operation may succeed (&#x60;HTTP/200 OK&#x60;). However, the server returns an error message (&#x60;HTTP/400 Bad Request&#x60;) that indicates that the destination is on a high-volume domain. **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only. | 
+ **destinationListCreate** | [**DestinationListCreate**](DestinationListCreate.md) | Provide destination information and an optional array of destination objects. * In the API request, accepts no more than 500 destination objects in the destination list. * Does not support global destination lists. You must set the &#x60;isGlobal&#x60; field to &#x60;false&#x60;. * You cannot use the Destination Lists API to create a destination list with the &#x60;access&#x60; type of &#x60;thirdparty_block&#x60;. * You must set the &#x60;bundleTypeId&#x60; to &#x60;2&#x60;. Web profiles are applied on your policy rules.  If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list, the operation may succeed (&#x60;HTTP/200 OK&#x60;). However, the server returns an error message (&#x60;HTTP/400 Bad Request&#x60;) that indicates that the destination is on a high-volume domain. **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only. | 
 
 ### Return type
 
@@ -95,7 +95,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/destinationlists"
 )
 
 func main() {
@@ -165,7 +165,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/destinationlists"
 )
 
 func main() {
@@ -235,7 +235,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/destinationlists"
 )
 
 func main() {
@@ -303,7 +303,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/destinationlists"
 )
 
 func main() {

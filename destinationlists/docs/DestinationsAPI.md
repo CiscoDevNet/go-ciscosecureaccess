@@ -27,12 +27,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/destinationlists"
 )
 
 func main() {
 	destinationListId := int64(245) // int64 | The unique ID of the destination list.
-	destinationCreateObject := []openapiclient.DestinationCreateObject{*openapiclient.NewDestinationCreateObject("cisco.com")} // []DestinationCreateObject | Add destinations to a destination list. Accepts no more than 500 destination objects in the body of the request.  If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list, the operation may succeed (`HTTP/200 OK`). However, the server returns an error message (`HTTP/400 Bad Request`) that indicates that the destination is on a high-volume domain. **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only.
+	destinationCreateObject := []openapiclient.DestinationCreateObject{*openapiclient.NewDestinationCreateObject("cisco.com")} // []DestinationCreateObject | Add destinations to a destination list. Accepts no more than 500 destination objects in the body of the request unless the destination list is of type `thirdparty_block`. If the type of the destination list is `thirdparty_block`, then the system accepts 100 destination objects.  If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list, the operation may succeed (`HTTP/200 OK`). However, the server returns an error message (`HTTP/400 Bad Request`) that indicates that the destination is on a high-volume domain. **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -62,7 +62,7 @@ Other parameters are passed through a pointer to a apiCreateDestinationsRequest 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **destinationCreateObject** | [**[]DestinationCreateObject**](DestinationCreateObject.md) | Add destinations to a destination list. Accepts no more than 500 destination objects in the body of the request.  If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list, the operation may succeed (&#x60;HTTP/200 OK&#x60;). However, the server returns an error message (&#x60;HTTP/400 Bad Request&#x60;) that indicates that the destination is on a high-volume domain. **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only. | 
+ **destinationCreateObject** | [**[]DestinationCreateObject**](DestinationCreateObject.md) | Add destinations to a destination list. Accepts no more than 500 destination objects in the body of the request unless the destination list is of type &#x60;thirdparty_block&#x60;. If the type of the destination list is &#x60;thirdparty_block&#x60;, then the system accepts 100 destination objects.  If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list, the operation may succeed (&#x60;HTTP/200 OK&#x60;). However, the server returns an error message (&#x60;HTTP/400 Bad Request&#x60;) that indicates that the destination is on a high-volume domain. **Note:** Secure Access does not add URLs that are on high-volume domains to destination lists. Instead, we recommend that you add the domain only. | 
 
 ### Return type
 
@@ -99,7 +99,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/destinationlists"
 )
 
 func main() {
@@ -171,7 +171,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/destinationlists"
 )
 
 func main() {

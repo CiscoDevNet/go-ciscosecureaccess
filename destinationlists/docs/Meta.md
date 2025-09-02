@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Page** | Pointer to **int64** | The number of the page in the collection. | [optional] 
-**Limit** | Pointer to **int64** | The maximum number of items that are returned on the page. | [optional] 
+**Limit** | Pointer to **int64** | The maximum number of items the server returns on the page. | [optional] 
 **Total** | Pointer to **int64** | The total number of items in the collection. | [optional] 
 
 ## Methods

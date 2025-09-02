@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Access** | **string** | Configure your access rules to block or allow certain destination lists. No support for the access type on destination lists. Valid values are: &#x60;allow&#x60;, &#x60;block&#x60;, &#x60;url_proxy&#x60;, &#x60;no_decrypt&#x60;, &#x60;warn&#x60;, or &#x60;none&#x60;. | 
+**Access** | [**Access**](Access.md) |  | 
 **IsGlobal** | **bool** | Specifies whether the destination list is a global destination list. There is only one default &#x60;allow&#x60; destination list and one default &#x60;block&#x60; destination list for an organization. **Note:** No support for global destination lists. When you creat a destination list, set the &#x60;isGlobal&#x60; field to &#x60;false&#x60;. | 
 **Name** | **string** | The name of the destination list. | 
 **BundleTypeId** | Pointer to [**BundleTypeId**](BundleTypeId.md) |  | [optional] 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewDestinationListCreate
 
-`func NewDestinationListCreate(access string, isGlobal bool, name string, ) *DestinationListCreate`
+`func NewDestinationListCreate(access Access, isGlobal bool, name string, ) *DestinationListCreate`
 
 NewDestinationListCreate instantiates a new DestinationListCreate object
 This constructor will assign default values to properties that have it defined,
@@ -31,20 +31,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetAccess
 
-`func (o *DestinationListCreate) GetAccess() string`
+`func (o *DestinationListCreate) GetAccess() Access`
 
 GetAccess returns the Access field if non-nil, zero value otherwise.
 
 ### GetAccessOk
 
-`func (o *DestinationListCreate) GetAccessOk() (*string, bool)`
+`func (o *DestinationListCreate) GetAccessOk() (*Access, bool)`
 
 GetAccessOk returns a tuple with the Access field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAccess
 
-`func (o *DestinationListCreate) SetAccess(v string)`
+`func (o *DestinationListCreate) SetAccess(v Access)`
 
 SetAccess sets Access field to given value.
 

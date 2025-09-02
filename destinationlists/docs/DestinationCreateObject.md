@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Destination** | **string** | A domain, URL, or IP. | 
-**Comment** | Pointer to **string** | A comment about the destination. | [optional] 
+**Type** | Pointer to [**ModelType**](ModelType.md) |  | [optional] 
+**Comment** | Pointer to **string** | The comment about the destination. | [optional] 
 
 ## Methods
 
@@ -45,6 +46,31 @@ and a boolean to check if the value has been set.
 
 SetDestination sets Destination field to given value.
 
+
+### GetType
+
+`func (o *DestinationCreateObject) GetType() ModelType`
+
+GetType returns the Type field if non-nil, zero value otherwise.
+
+### GetTypeOk
+
+`func (o *DestinationCreateObject) GetTypeOk() (*ModelType, bool)`
+
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetType
+
+`func (o *DestinationCreateObject) SetType(v ModelType)`
+
+SetType sets Type field to given value.
+
+### HasType
+
+`func (o *DestinationCreateObject) HasType() bool`
+
+HasType returns a boolean if a field has been set.
 
 ### GetComment
 

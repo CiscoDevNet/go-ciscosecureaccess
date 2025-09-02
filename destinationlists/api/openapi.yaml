@@ -2,9 +2,9 @@ openapi: 3.0.1
 info:
   contact:
     name: Cloud Security Developer Community
-  description: Create and manage destination lists and network destinations.
+  description: Create and manage destination lists and destinations.
   title: Cisco Secure Access Destination Lists API
-  version: 1.0.0
+  version: 2.0.1
 servers:
 - url: "https://api.sse.cisco.com/{basePath}"
   variables:
@@ -138,9 +138,9 @@ paths:
               $ref: '#/components/schemas/DestinationListCreate'
         description: |-
           Provide destination information and an optional array of destination objects.
-          * Accepts no more than 500 destination objects.
+          * In the API request, accepts no more than 500 destination objects in the destination list.
           * Does not support global destination lists. You must set the `isGlobal` field to `false`.
-          * Does not support an access type. Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`.
+          * You cannot use the Destination Lists API to create a destination list with the `access` type of `thirdparty_block`.
           * You must set the `bundleTypeId` to `2`. Web profiles are applied on your policy rules.
 
           If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list,
@@ -570,7 +570,8 @@ paths:
               type: array
         description: |-
           Add destinations to a destination list.
-          Accepts no more than 500 destination objects in the body of the request.
+          Accepts no more than 500 destination objects in the body of the request unless the destination list is of type `thirdparty_block`.
+          If the type of the destination list is `thirdparty_block`, then the system accepts 100 destination objects.
 
           If you make an API request on the POST operation that adds a URL on a high-volume domain to a destination list,
           the operation may succeed (`HTTP/200 OK`).
@@ -857,7 +858,7 @@ components:
           example: 50
           type: integer
         limit:
-          description: The maximum number of items that are returned on the page.
+          description: The maximum number of items the server returns on the page.
           example: 10
           type: integer
         total:
@@ -868,7 +869,7 @@ components:
     bundleTypeId:
       description: |-
         The type of the destination list.
-        In your policy rules, security controls are applied to your destination lists.
+        In your policy rules, the system applies security controls to your destination lists.
         **Note:** When you create a destination list, set the `bundleTypeId` to `2`.
       enum:
       - 2
@@ -885,7 +886,15 @@ components:
       description: |-
         Configure your access rules to block or allow certain destination lists.
         No support for the access type on destination lists.
-        Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`.
+        Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, `none`, or `third_party_block`.
+      enum:
+      - allow
+      - block
+      - url_proxy
+      - no_decrypt
+      - warn
+      - none
+      - thirdparty_block
       example: none
       type: string
     id:
@@ -1026,12 +1035,7 @@ components:
           example: 2345678
           type: integer
         access:
-          description: |-
-            Configure your access rules to block or allow certain destination lists.
-            No support for the access type on destination lists.
-            Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`.
-          example: none
-          type: string
+          $ref: '#/components/schemas/access'
         isGlobal:
           description: |-
             Specifies whether the destination list is a global destination list.
@@ -1048,11 +1052,12 @@ components:
           example: 1
           type: integer
         createdAt:
-          description: The date and time when the destination list was created.
+          description: The date and time when the system created the destination list.
           example: 1490206249
           type: integer
         modifiedAt:
-          description: The date and time when the destination list was modified.
+          description: The date and time when the system modified the destination
+            list.
           example: 1520476127
           type: integer
         isMspDefault:
@@ -1060,7 +1065,8 @@ components:
           example: false
           type: boolean
         markedForDeletion:
-          description: Specifies whether the destination list is marked for deletion.
+          description: Specifies whether the system marks the destination list for
+            deletion.
           example: false
           type: boolean
         bundleTypeId:
@@ -1087,12 +1093,7 @@ components:
         name: The name of the destination list.
       properties:
         access:
-          description: |-
-            Configure your access rules to block or allow certain destination lists.
-            No support for the access type on destination lists.
-            Valid values are: `allow`, `block`, `url_proxy`, `no_decrypt`, `warn`, or `none`.
-          example: none
-          type: string
+          $ref: '#/components/schemas/access'
         isGlobal:
           description: |-
             Specifies whether the destination list is a global destination list.
@@ -1169,9 +1170,11 @@ components:
           description: "A domain, URL, or IP."
           example: cisco.com
           type: string
+        type:
+          $ref: '#/components/schemas/type'
         comment:
-          description: A comment about the destination.
-          example: A comment about the destination
+          description: The comment about the destination.
+          example: Add new destination list
           type: string
       required:
       - destination

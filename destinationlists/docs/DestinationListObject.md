@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int64** | The unique ID of the destination list. | 
 **OrganizationId** | **int64** | The organization ID. | 
-**Access** | **string** | Configure your access rules to block or allow certain destination lists. No support for the access type on destination lists. Valid values are: &#x60;allow&#x60;, &#x60;block&#x60;, &#x60;url_proxy&#x60;, &#x60;no_decrypt&#x60;, &#x60;warn&#x60;, or &#x60;none&#x60;. | 
+**Access** | [**Access**](Access.md) |  | 
 **IsGlobal** | **bool** | Specifies whether the destination list is a global destination list. There is only one default &#x60;allow&#x60; destination list and one default &#x60;block&#x60; destination list for an organization. **Note:** No support for global destination lists. When you creat a destination list, set the &#x60;isGlobal&#x60; field to &#x60;false&#x60;. | 
 **Name** | **string** | The name of the destination list. | 
 **ThirdpartyCategoryId** | **int64** | The third-party category ID of the destination list. | 
-**CreatedAt** | **int64** | The date and time when the destination list was created. | 
-**ModifiedAt** | **int64** | The date and time when the destination list was modified. | 
+**CreatedAt** | **int64** | The date and time when the system created the destination list. | 
+**ModifiedAt** | **int64** | The date and time when the system modified the destination list. | 
 **IsMspDefault** | **bool** | Specifies whether MSP is the default. | 
-**MarkedForDeletion** | **bool** | Specifies whether the destination list is marked for deletion. | 
+**MarkedForDeletion** | **bool** | Specifies whether the system marks the destination list for deletion. | 
 **BundleTypeId** | Pointer to [**BundleTypeId**](BundleTypeId.md) |  | [optional] 
 **Meta** | Pointer to [**DestinationListObjectMeta**](DestinationListObjectMeta.md) |  | [optional] 
 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewDestinationListObject
 
-`func NewDestinationListObject(id int64, organizationId int64, access string, isGlobal bool, name string, thirdpartyCategoryId int64, createdAt int64, modifiedAt int64, isMspDefault bool, markedForDeletion bool, ) *DestinationListObject`
+`func NewDestinationListObject(id int64, organizationId int64, access Access, isGlobal bool, name string, thirdpartyCategoryId int64, createdAt int64, modifiedAt int64, isMspDefault bool, markedForDeletion bool, ) *DestinationListObject`
 
 NewDestinationListObject instantiates a new DestinationListObject object
 This constructor will assign default values to properties that have it defined,
@@ -78,20 +78,20 @@ SetOrganizationId sets OrganizationId field to given value.
 
 ### GetAccess
 
-`func (o *DestinationListObject) GetAccess() string`
+`func (o *DestinationListObject) GetAccess() Access`
 
 GetAccess returns the Access field if non-nil, zero value otherwise.
 
 ### GetAccessOk
 
-`func (o *DestinationListObject) GetAccessOk() (*string, bool)`
+`func (o *DestinationListObject) GetAccessOk() (*Access, bool)`
 
 GetAccessOk returns a tuple with the Access field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAccess
 
-`func (o *DestinationListObject) SetAccess(v string)`
+`func (o *DestinationListObject) SetAccess(v Access)`
 
 SetAccess sets Access field to given value.
 
