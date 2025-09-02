@@ -4,7 +4,7 @@ generate:
 	rm -f $(PACKAGE)/go.mod $(PACKAGE)/go.sum
 
 generate-destinationlists:
-	make generate PACKAGE=destinationlists SPEC=./specs/cisco_secure_access_destination_lists_api_1_0_0.yaml
+	make generate PACKAGE=destinationlists SPEC=./specs/cisco_secure_access_destination_lists_api_2_0_1.yaml
 
 generate-ntg:
 	make generate PACKAGE=ntg SPEC=./specs/cisco_secure_access_network_tunnel_groups_and_regions_api_1_0_0.yaml CLI_EXTRA="$$(cat specs/ntg_name_mapping.txt)"
