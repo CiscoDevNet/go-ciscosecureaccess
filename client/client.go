@@ -41,20 +41,30 @@ func (c *SSEClientFactory) GetHttpClient(ctx context.Context) *http.Client {
 		c.ApiEndpoint = ciscoSseApiEndpoint
 	}
 	if c.SSEHttpClient == nil {
+		// Create a retryable HTTP client for token requests
+		tokenRetryClient := retryablehttp.NewClient()
+		tokenRetryClient.RetryMax = 10
+
 		sSEAuthconfig := &clientcredentials.Config{
 			ClientID:     c.KeyId,
 			ClientSecret: c.KeySecret,
 			TokenURL:     fmt.Sprintf("https://%s/auth/v2/token", c.ApiEndpoint)}
 
+		// Set the HTTP client for OAuth2 to use our retryable client
+		ctx = context.WithValue(ctx, oauth2.HTTPClient, tokenRetryClient.StandardClient())
+
 		initial, _ := sSEAuthconfig.TokenSource(ctx).Token()
 		oauthHttpClient := oauth2.NewClient(ctx, oauth2.ReuseTokenSource(initial, sSEAuthconfig.TokenSource(ctx)))
+
+		// Create another retryable client for API requests
 		retryHttpClient := retryablehttp.NewClient()
 		retryHttpClient.HTTPClient = oauthHttpClient
+		retryHttpClient.RetryMax = 10
+
 		c.SSEHttpClient = retryHttpClient.StandardClient()
 	}
 	return c.SSEHttpClient
 }
-
 func (c *SSEClientFactory) GetURLString(suffix string) string {
 	var hostname string
 	if c.ApiEndpoint == "" {
