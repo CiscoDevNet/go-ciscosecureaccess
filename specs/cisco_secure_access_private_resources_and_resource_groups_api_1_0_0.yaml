@@ -1078,6 +1078,8 @@ components:
         - tcp
         - udp
         - http/https
+        - ssh
+        - rdp-tcp
       example: Any
 
     sni:
