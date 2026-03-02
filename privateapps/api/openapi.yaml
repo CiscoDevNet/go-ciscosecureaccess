@@ -117,68 +117,68 @@ paths:
                 limit: 100
                 total: 200
               schema:
-                $ref: '#/components/schemas/privateResourceGroupList'
+                $ref: "#/components/schemas/privateResourceGroupList"
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresourcegroups:read
@@ -200,7 +200,7 @@ paths:
               - 1325
               - 3452
             schema:
-              $ref: '#/components/schemas/privateResourceGroupRequest'
+              $ref: "#/components/schemas/privateResourceGroupRequest"
         description: Create the Resource Group.
       responses:
         "201":
@@ -218,68 +218,68 @@ paths:
                 createdBy: "123455"
                 modifiedBy: "12345"
               schema:
-                $ref: '#/components/schemas/privateResourceGroupResponse'
+                $ref: "#/components/schemas/privateResourceGroupResponse"
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresourcegroups:write
@@ -324,64 +324,64 @@ paths:
           description: No Content
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresourcegroups:write
@@ -416,68 +416,68 @@ paths:
                 createdBy: "123455"
                 modifiedBy: "12345"
               schema:
-                $ref: '#/components/schemas/privateResourceGroupResponse'
+                $ref: "#/components/schemas/privateResourceGroupResponse"
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresourcegroups:read
@@ -507,7 +507,7 @@ paths:
               - 1325
               - 3452
             schema:
-              $ref: '#/components/schemas/privateResourceGroupRequest'
+              $ref: "#/components/schemas/privateResourceGroupRequest"
         description: Update the properties of the Private Resource Group.
       responses:
         "200":
@@ -525,68 +525,68 @@ paths:
                 createdBy: "123455"
                 modifiedBy: "12345"
               schema:
-                $ref: '#/components/schemas/privateResourceGroupResponse'
+                $ref: "#/components/schemas/privateResourceGroupResponse"
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresourcegroups:write
@@ -717,68 +717,68 @@ paths:
                 limit: 100
                 total: 200
               schema:
-                $ref: '#/components/schemas/privateResourceList'
+                $ref: "#/components/schemas/privateResourceList"
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresources:read
@@ -821,7 +821,7 @@ paths:
               - 123455
               - 94275
             schema:
-              $ref: '#/components/schemas/privateResourceRequest'
+              $ref: "#/components/schemas/privateResourceRequest"
         description: Create the Private Resource.
       responses:
         "201":
@@ -860,68 +860,68 @@ paths:
                 createdBy: "123456"
                 modifiedBy: "987654"
               schema:
-                $ref: '#/components/schemas/privateResourceResponse'
+                $ref: "#/components/schemas/privateResourceResponse"
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresources:write
@@ -965,64 +965,64 @@ paths:
           description: No Content
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresources:write
@@ -1078,68 +1078,68 @@ paths:
                 createdBy: "123456"
                 modifiedBy: "987654"
               schema:
-                $ref: '#/components/schemas/privateResourceResponse'
+                $ref: "#/components/schemas/privateResourceResponse"
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresources:read
@@ -1182,7 +1182,7 @@ paths:
                 - example.com
                 - 172.6.0.0/32
             schema:
-              $ref: '#/components/schemas/privateResourceRequest'
+              $ref: "#/components/schemas/privateResourceRequest"
         description: Update a Private Resource.
         required: false
       responses:
@@ -1222,68 +1222,68 @@ paths:
                 createdBy: "123456"
                 modifiedBy: "987654"
               schema:
-                $ref: '#/components/schemas/privateResourceResponse'
+                $ref: "#/components/schemas/privateResourceResponse"
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_400_response'
+                $ref: "#/components/schemas/listResourceGroups_400_response"
           description: Bad Request
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_401_response'
+                $ref: "#/components/schemas/listResourceGroups_401_response"
           description: Unauthorized
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "403":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_403_response'
+                $ref: "#/components/schemas/listResourceGroups_403_response"
           description: Forbidden
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_404_response'
+                $ref: "#/components/schemas/listResourceGroups_404_response"
           description: Not Found
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/listResourceGroups_500_response'
+                $ref: "#/components/schemas/listResourceGroups_500_response"
           description: Internal Server Error
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: "#/components/headers/Content-Type"
             Date:
-              $ref: '#/components/headers/Date'
+              $ref: "#/components/headers/Date"
       security:
       - oauthFlow:
         - policies.privateresources:write
@@ -1456,57 +1456,57 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/listResourceGroups_400_response'
+            $ref: "#/components/schemas/listResourceGroups_400_response"
       description: Bad Request
       headers:
         Content-Type:
-          $ref: '#/components/headers/Content-Type'
+          $ref: "#/components/headers/Content-Type"
         Date:
-          $ref: '#/components/headers/Date'
+          $ref: "#/components/headers/Date"
     "401Error":
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/listResourceGroups_401_response'
+            $ref: "#/components/schemas/listResourceGroups_401_response"
       description: Unauthorized
       headers:
         Content-Type:
-          $ref: '#/components/headers/Content-Type'
+          $ref: "#/components/headers/Content-Type"
         Date:
-          $ref: '#/components/headers/Date'
+          $ref: "#/components/headers/Date"
     "403Error":
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/listResourceGroups_403_response'
+            $ref: "#/components/schemas/listResourceGroups_403_response"
       description: Forbidden
       headers:
         Content-Type:
-          $ref: '#/components/headers/Content-Type'
+          $ref: "#/components/headers/Content-Type"
         Date:
-          $ref: '#/components/headers/Date'
+          $ref: "#/components/headers/Date"
     "404Error":
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/listResourceGroups_404_response'
+            $ref: "#/components/schemas/listResourceGroups_404_response"
       description: Not Found
       headers:
         Content-Type:
-          $ref: '#/components/headers/Content-Type'
+          $ref: "#/components/headers/Content-Type"
         Date:
-          $ref: '#/components/headers/Date'
+          $ref: "#/components/headers/Date"
     "500Error":
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/listResourceGroups_500_response'
+            $ref: "#/components/schemas/listResourceGroups_500_response"
       description: Internal Server Error
       headers:
         Content-Type:
-          $ref: '#/components/headers/Content-Type'
+          $ref: "#/components/headers/Content-Type"
         Date:
-          $ref: '#/components/headers/Date'
+          $ref: "#/components/headers/Date"
   schemas:
     privateResourceGroupName:
       description: |-
@@ -1610,7 +1610,7 @@ components:
           example: browser
           type: string
         protocol:
-          $ref: '#/components/schemas/protocolProxyToResource'
+          $ref: "#/components/schemas/protocolProxyToResource"
         sni:
           description: |-
             The Server Name Indication (SNI) domain name.
@@ -1651,12 +1651,12 @@ components:
       type: object
     browserBasedAccessRequest:
       allOf:
-      - $ref: '#/components/schemas/browserBasedAccessCommon'
-      - $ref: '#/components/schemas/externalFQDNPrefix'
+      - $ref: "#/components/schemas/browserBasedAccessCommon"
+      - $ref: "#/components/schemas/externalFQDNPrefix"
     browserBasedAccessResponse:
       allOf:
-      - $ref: '#/components/schemas/browserBasedAccessCommon'
-      - $ref: '#/components/schemas/externalFQDN'
+      - $ref: "#/components/schemas/browserBasedAccessCommon"
+      - $ref: "#/components/schemas/externalFQDN"
     accessTypesRequest:
       description: |-
         The list of connection properties that describe how end users can access private resources in the organization.
@@ -1674,7 +1674,7 @@ components:
         - example.com
       - type: network
       items:
-        $ref: '#/components/schemas/accessTypesRequest_inner'
+        $ref: "#/components/schemas/accessTypesRequest_inner"
       type: array
     accessTypes:
       description: |-
@@ -1694,7 +1694,7 @@ components:
         - example.com
       - type: network
       items:
-        $ref: '#/components/schemas/accessTypes_inner'
+        $ref: "#/components/schemas/accessTypes_inner"
       type: array
     resourceAddresses:
       description: The list of resource addresses for the Private Resources.
@@ -1714,7 +1714,7 @@ components:
         - protocol: HTTP/HTTPS
           ports: "80"
       items:
-        $ref: '#/components/schemas/resourceAddresses_inner'
+        $ref: "#/components/schemas/resourceAddresses_inner"
       type: array
     protocolProxyToResource:
       description: |-
@@ -1734,6 +1734,8 @@ components:
       - tcp
       - udp
       - http/https
+      - ssh
+      - rdp-tcp
       example: Any
       type: string
     sni:
@@ -1850,7 +1852,7 @@ components:
             - example.com
           - type: network
           items:
-            $ref: '#/components/schemas/accessTypesRequest_inner'
+            $ref: "#/components/schemas/accessTypesRequest_inner"
           type: array
         resourceAddresses:
           description: The list of resource addresses for the Private Resources.
@@ -1870,7 +1872,7 @@ components:
             - protocol: HTTP/HTTPS
               ports: "80"
           items:
-            $ref: '#/components/schemas/resourceAddresses_inner'
+            $ref: "#/components/schemas/resourceAddresses_inner"
           type: array
         resourceGroupIds:
           description: The list of IDs for the Private Resource Groups that include
@@ -1969,7 +1971,7 @@ components:
             - example.com
           - type: network
           items:
-            $ref: '#/components/schemas/accessTypes_inner'
+            $ref: "#/components/schemas/accessTypes_inner"
           type: array
         resourceAddresses:
           description: The list of resource addresses for the Private Resources.
@@ -1989,7 +1991,7 @@ components:
             - protocol: HTTP/HTTPS
               ports: "80"
           items:
-            $ref: '#/components/schemas/resourceAddresses_inner'
+            $ref: "#/components/schemas/resourceAddresses_inner"
           type: array
         resourceGroupIds:
           description: The list of IDs for the Private Resource Groups that include
@@ -2213,7 +2215,7 @@ components:
             createdBy: "123456"
             modifiedBy: "987654"
           items:
-            $ref: '#/components/schemas/privateResourceResponse'
+            $ref: "#/components/schemas/privateResourceResponse"
           type: array
         offset:
           description: The index where the server starts to read the collection.
@@ -2250,7 +2252,7 @@ components:
       properties:
         items:
           items:
-            $ref: '#/components/schemas/privateResourceGroupResponse'
+            $ref: "#/components/schemas/privateResourceGroupResponse"
           type: array
         offset:
           description: The index where the server starts to read the collection.
@@ -2335,27 +2337,27 @@ components:
       type: object
     accessTypesRequest_inner:
       anyOf:
-      - $ref: '#/components/schemas/clientBasedAccess'
-      - $ref: '#/components/schemas/networkBasedAccess'
-      - $ref: '#/components/schemas/browserBasedAccessRequest'
+      - $ref: "#/components/schemas/clientBasedAccess"
+      - $ref: "#/components/schemas/networkBasedAccess"
+      - $ref: "#/components/schemas/browserBasedAccessRequest"
     accessTypes_inner:
       anyOf:
-      - $ref: '#/components/schemas/branchAccess'
-      - $ref: '#/components/schemas/browserBasedAccessResponse'
-      - $ref: '#/components/schemas/clientBasedAccess'
-      - $ref: '#/components/schemas/networkBasedAccess'
+      - $ref: "#/components/schemas/branchAccess"
+      - $ref: "#/components/schemas/browserBasedAccessResponse"
+      - $ref: "#/components/schemas/clientBasedAccess"
+      - $ref: "#/components/schemas/networkBasedAccess"
       discriminator:
         mapping:
-          browser: '#/components/schemas/browserBasedAccessResponse'
-          client: '#/components/schemas/clientBasedAccess'
-          network: '#/components/schemas/networkBasedAccess'
-          branch: '#/components/schemas/branchAccess'
+          browser: "#/components/schemas/browserBasedAccessResponse"
+          client: "#/components/schemas/clientBasedAccess"
+          network: "#/components/schemas/networkBasedAccess"
+          branch: "#/components/schemas/branchAccess"
         propertyName: type
     resourceAddresses_inner_protocolPorts_inner:
       description: The protocol and port properties for the Private Resource's address.
       properties:
         protocol:
-          $ref: '#/components/schemas/protocolClientToResource'
+          $ref: "#/components/schemas/protocolClientToResource"
         ports:
           description: |-
             The port number or list of comma-separated port numbers that you can use to connect to the Private Resource.
@@ -2382,7 +2384,7 @@ components:
           - protocol: TCP
             ports: "80,9000"
           items:
-            $ref: '#/components/schemas/resourceAddresses_inner_protocolPorts_inner'
+            $ref: "#/components/schemas/resourceAddresses_inner_protocolPorts_inner"
           type: array
       required:
       - destinationAddr
