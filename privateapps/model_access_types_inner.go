@@ -1,7 +1,3 @@
-// Copyright 2025 Cisco Systems, Inc. and its affiliates
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Cisco Secure Access Private Resources and Resource Groups API
 
@@ -90,70 +86,6 @@ func (dst *AccessTypesInner) UnmarshalJSON(data []byte) error {
 
 	// check if the discriminator value is 'network'
 	if jsonDict["type"] == "network" {
-		// try to unmarshal JSON data into NetworkBasedAccess
-		err = json.Unmarshal(data, &dst.NetworkBasedAccess);
-		if err == nil {
-			jsonNetworkBasedAccess, _ := json.Marshal(dst.NetworkBasedAccess)
-			if string(jsonNetworkBasedAccess) == "{}" { // empty struct
-				dst.NetworkBasedAccess = nil
-			} else {
-				return nil // data stored in dst.NetworkBasedAccess, return on the first match
-			}
-		} else {
-			dst.NetworkBasedAccess = nil
-		}
-	}
-
-	// check if the discriminator value is 'branchAccess'
-	if jsonDict["type"] == "branchAccess" {
-		// try to unmarshal JSON data into BranchAccess
-		err = json.Unmarshal(data, &dst.BranchAccess);
-		if err == nil {
-			jsonBranchAccess, _ := json.Marshal(dst.BranchAccess)
-			if string(jsonBranchAccess) == "{}" { // empty struct
-				dst.BranchAccess = nil
-			} else {
-				return nil // data stored in dst.BranchAccess, return on the first match
-			}
-		} else {
-			dst.BranchAccess = nil
-		}
-	}
-
-	// check if the discriminator value is 'browserBasedAccessResponse'
-	if jsonDict["type"] == "browserBasedAccessResponse" {
-		// try to unmarshal JSON data into BrowserBasedAccessResponse
-		err = json.Unmarshal(data, &dst.BrowserBasedAccessResponse);
-		if err == nil {
-			jsonBrowserBasedAccessResponse, _ := json.Marshal(dst.BrowserBasedAccessResponse)
-			if string(jsonBrowserBasedAccessResponse) == "{}" { // empty struct
-				dst.BrowserBasedAccessResponse = nil
-			} else {
-				return nil // data stored in dst.BrowserBasedAccessResponse, return on the first match
-			}
-		} else {
-			dst.BrowserBasedAccessResponse = nil
-		}
-	}
-
-	// check if the discriminator value is 'clientBasedAccess'
-	if jsonDict["type"] == "clientBasedAccess" {
-		// try to unmarshal JSON data into ClientBasedAccess
-		err = json.Unmarshal(data, &dst.ClientBasedAccess);
-		if err == nil {
-			jsonClientBasedAccess, _ := json.Marshal(dst.ClientBasedAccess)
-			if string(jsonClientBasedAccess) == "{}" { // empty struct
-				dst.ClientBasedAccess = nil
-			} else {
-				return nil // data stored in dst.ClientBasedAccess, return on the first match
-			}
-		} else {
-			dst.ClientBasedAccess = nil
-		}
-	}
-
-	// check if the discriminator value is 'networkBasedAccess'
-	if jsonDict["type"] == "networkBasedAccess" {
 		// try to unmarshal JSON data into NetworkBasedAccess
 		err = json.Unmarshal(data, &dst.NetworkBasedAccess);
 		if err == nil {

@@ -29,7 +29,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/privateapps"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/privateapps"
 )
 
 func main() {
@@ -95,7 +95,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/privateapps"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/privateapps"
 )
 
 func main() {
@@ -167,7 +167,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/privateapps"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/privateapps"
 )
 
 func main() {
@@ -237,7 +237,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/privateapps"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/privateapps"
 )
 
 func main() {
@@ -311,7 +311,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CiscoDevNet/go-ciscosecureaccess/privateapps"
+	openapiclient "github.com/cisco-sbg/go-ciscosecureaccess/privateapps"
 )
 
 func main() {

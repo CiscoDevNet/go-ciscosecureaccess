@@ -1,7 +1,3 @@
-// Copyright 2025 Cisco Systems, Inc. and its affiliates
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Cisco Secure Access Private Resources and Resource Groups API
 
@@ -28,6 +24,8 @@ const (
 	TCP ProtocolClientToResource = "tcp"
 	UDP ProtocolClientToResource = "udp"
 	HTTP_HTTPS ProtocolClientToResource = "http/https"
+	SSH ProtocolClientToResource = "ssh"
+	RDP_TCP ProtocolClientToResource = "rdp-tcp"
 )
 
 // All allowed values of ProtocolClientToResource enum
@@ -36,6 +34,8 @@ var AllowedProtocolClientToResourceEnumValues = []ProtocolClientToResource{
 	"tcp",
 	"udp",
 	"http/https",
+	"ssh",
+	"rdp-tcp",
 }
 
 func (v *ProtocolClientToResource) UnmarshalJSON(src []byte) error {
