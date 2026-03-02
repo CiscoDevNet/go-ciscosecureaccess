@@ -1,6 +1,6 @@
 
 generate:
-	openapi-generator generate -i $(SPEC) -g go --package-name $(PACKAGE) --git-host github.com --git-user-id cisco-sbg --git-repo-id go-ciscosecureaccess -o $(PACKAGE) --additional-properties=isGoSubmodule=true --type-mappings integer=int64,int=int64,number=int64 --openapi-normalizer KEEP_ONLY_FIRST_TAG_IN_OPERATION=true --additional-properties=disallowAdditionalPropertiesIfNotPresent=false $(CLI_EXTRA)
+	openapi-generator generate -i $(SPEC) -g go --package-name $(PACKAGE) --git-host github.com --git-user-id CiscoDevNet --git-repo-id go-ciscosecureaccess -o $(PACKAGE) --additional-properties=isGoSubmodule=true --type-mappings integer=int64,int=int64,number=int64 --openapi-normalizer KEEP_ONLY_FIRST_TAG_IN_OPERATION=true --additional-properties=disallowAdditionalPropertiesIfNotPresent=false $(CLI_EXTRA)
 	rm -f $(PACKAGE)/go.mod $(PACKAGE)/go.sum
 
 generate-destinationlists:
