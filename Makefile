@@ -15,6 +15,9 @@ generate-rules:
 generate-privateapps:
 	make generate PACKAGE=privateapps SPEC=./specs/cisco_secure_access_private_resources_and_resource_groups_api_1_0_0.yaml
 
+generate-networks:
+	make generate PACKAGE=networks SPEC=./specs/cisco_secure_access_networks_api_2_0_0.yaml
+
 generate-resconn:
 	make generate PACKAGE=resconn SPEC=./specs/cisco_secure_access_resource_connector_groups_and_resource_connectors_api_1_0_0.yaml
 
