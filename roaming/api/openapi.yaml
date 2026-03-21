@@ -1,0 +1,974 @@
+openapi: 3.0.1
+info:
+  contact:
+    name: Cloud Security Developer Community
+  description: Manage the roaming computers in the organization.
+  title: Cisco Secure Access Roaming Computers API
+  version: 2.0.0
+servers:
+- url: "https://api.sse.cisco.com/{basePath}"
+  variables:
+    basePath:
+      default: deployments/v2
+security:
+- oauthFlow: []
+tags:
+- name: Roaming Computers
+- name: Organization Information
+- name: Secure Access
+paths:
+  /roamingcomputers:
+    get:
+      description: List the roaming computers.
+      operationId: listRoamingComputers
+      parameters:
+      - description: The number of a page in the collection.
+        example: 3
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          minimum: 1
+          type: integer
+        style: form
+      - description: The number of records in the collection to return on the page.
+        example: 40
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: The name of the roaming computer.
+        example: roaming-device-1
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter for the status of the roaming computer with DNS-layer
+          security.
+        example: Network
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          pattern: ^(Off|Open|Transparent|Encrypted|VA|Network|Disabled|Uninstalled|TrustedCustomerNetwork|CiscoTrustedNetwork|DisabledDueToACVpnFullTunnel)$
+          type: string
+        style: form
+      - description: Filter for the status of the roaming computer with Internet security
+          (Secure Web Gateway).
+        example: Protected
+        explode: true
+        in: query
+        name: swgStatus
+        required: false
+        schema:
+          pattern: ^(NA|Protected|Unprotected|Disabled|DisabledDueToVPN|DisabledDueToTrustedNetwork|ConfigError|CloudServiceUnavailable)$
+          type: string
+        style: form
+      - description: The date and time (timestamp) before the last sync.
+        example: 2024-09-19T10:34:30.000Z
+        explode: true
+        in: query
+        name: lastSyncBefore
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: The date and time (timestamp) after the last sync.
+        example: 2024-09-19T10:34:30.000Z
+        explode: true
+        in: query
+        name: lastSyncAfter
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - originId: 618400931
+                deviceId: AB000C044C87A4F0
+                type: anyconnect
+                status: Encrypted
+                swgStatus: Protected
+                lastSyncStatus: Encrypted
+                lastSyncSwgStatus: Protected
+                lastSync: 2024-09-19T10:34:30.000Z
+                version: 5.2.3
+                name: wkst2
+                hasIpBlocking: false
+                appliedBundle: 2
+                osVersion: Microsoft Windows NT 10.0.19045.0
+                osVersionName: Windows 10
+                anyconnectDeviceId: 9e963836fef9429b66c3e47b58e496efce2b5003
+              schema:
+                items:
+                  $ref: "#/components/schemas/RoamingComputerObject"
+                type: array
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.roamingcomputers:read
+      summary: List Roaming Computers
+      tags:
+      - Roaming Computers
+  /roamingcomputers/{deviceId}:
+    delete:
+      description: Delete a roaming computer in the organization.
+      operationId: deleteRoamingComputer
+      parameters:
+      - description: The device ID (deviceId) of the roaming computer.
+        example: AB00C7DCEC99D211
+        explode: false
+        in: path
+        name: deviceId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          content: {}
+          description: No Content
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.roamingcomputers:write
+      summary: Delete Roaming Computer
+      tags:
+      - Roaming Computers
+    get:
+      description: Get a roaming computer in the organization.
+      operationId: getRoamingComputer
+      parameters:
+      - description: The device ID (deviceId) of the roaming computer.
+        example: AB00C7DCEC99D211
+        explode: false
+        in: path
+        name: deviceId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                originId: 618400931
+                deviceId: AB000C044C87A4F0
+                type: anyconnect
+                status: Encrypted
+                swgStatus: Protected
+                lastSyncStatus: Encrypted
+                lastSyncSwgStatus: Protected
+                lastSync: 2024-09-19T10:34:30.000Z
+                version: 5.2.3
+                name: wkst2
+                hasIpBlocking: false
+                appliedBundle: 2
+                osVersion: Microsoft Windows NT 10.0.19045.0
+                osVersionName: Windows 10
+                anyconnectDeviceId: 9e963836fef9429b66c3e47b58e496efce2b5003
+              schema:
+                $ref: "#/components/schemas/RoamingComputerObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.roamingcomputers:read
+      summary: Get Roaming Computer
+      tags:
+      - Roaming Computers
+    put:
+      description: Update a roaming computer in the organization.
+      operationId: updateRoamingComputer
+      parameters:
+      - description: The device ID (deviceId) of the roaming computer.
+        example: AB00C7DCEC99D211
+        explode: false
+        in: path
+        name: deviceId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: roaming computer test1
+            schema:
+              $ref: "#/components/schemas/updateRoamingComputer_request"
+        description: Update the roaming computer.
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                originId: 618400931
+                deviceId: AB000C044C87A4F0
+                type: anyconnect
+                status: Encrypted
+                swgStatus: Protected
+                lastSyncStatus: Encrypted
+                lastSyncSwgStatus: Protected
+                lastSync: 2024-09-19T10:34:30.000Z
+                version: 5.2.3
+                name: wkst2
+                hasIpBlocking: false
+                appliedBundle: 2
+                osVersion: Microsoft Windows NT 10.0.19045.0
+                osVersionName: Windows 10
+                anyconnectDeviceId: 9e963836fef9429b66c3e47b58e496efce2b5003
+              schema:
+                $ref: "#/components/schemas/RoamingComputerObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.roamingcomputers:write
+      summary: Update Roaming Computer
+      tags:
+      - Roaming Computers
+  /roamingcomputers/orgInfo:
+    get:
+      description: |-
+        Get the OrgInfo.json properties for deploying the Cisco Secure Client on user devices in the organization.
+        The Cisco Secure Client with the Internet Security module requires the OrgInfo.json properties.
+      operationId: getOrganizationInfo
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                organizationId: 1234567
+                fingerprint: example-fingerprint
+                userId: 67890
+              schema:
+                $ref: "#/components/schemas/OrgInfo"
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listRoamingComputers_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.roamingcomputersOrgInfo:read
+      summary: Get OrgInfo Properties
+      tags:
+      - Organization Information
+components:
+  headers:
+    Content-Type:
+      description: The MIME content type of the response body.
+      example: application/json
+      explode: false
+      schema:
+        type: string
+      style: simple
+    Date:
+      description: The timestamp of the response.
+      example: 2023-03-14T18:34:25Z
+      explode: false
+      schema:
+        pattern: "^[0-90-90-90-9-0-90-9-0-90-9T0-90-9:0-90-9:0-90-9Z]+$"
+        type: string
+      style: simple
+  parameters:
+    paginationPageParam:
+      description: The number of a page in the collection.
+      example: 3
+      explode: true
+      in: query
+      name: page
+      required: false
+      schema:
+        default: 1
+        format: int32
+        minimum: 1
+        type: integer
+      style: form
+    paginationLimitParam:
+      description: The number of records in the collection to return on the page.
+      example: 40
+      explode: true
+      in: query
+      name: limit
+      required: false
+      schema:
+        default: 100
+        format: int32
+        maximum: 100
+        minimum: 1
+        type: integer
+      style: form
+    deviceId:
+      description: The device ID (deviceId) of the roaming computer.
+      example: AB00C7DCEC99D211
+      explode: false
+      in: path
+      name: deviceId
+      required: true
+      schema:
+        type: string
+      style: simple
+  responses:
+    "400Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listRoamingComputers_400_response"
+      description: Bad Request
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "401Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listRoamingComputers_401_response"
+      description: Unauthorized
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "403Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listRoamingComputers_403_response"
+      description: Forbidden
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "404Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listRoamingComputers_404_response"
+      description: Not Found
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "500Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listRoamingComputers_500_response"
+      description: Internal Server Error
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+  schemas:
+    name:
+      description: The name of the roaming computer. `name` is a sequence of 1–50
+        characters.
+      example: roaming-computer-one
+      maxLength: 50
+      minLength: 1
+      type: string
+    OrgInfo:
+      description: |-
+        The OrgInfo.json properties for deploying the Cisco Secure Client on user devices in the organization.
+        The Cisco Secure Client with the Internet Security module requires the OrgInfo.json properties.
+      example:
+        organizationId: 1245678
+        fingerprint: example-fingerprint
+        userId: 1456890
+      properties:
+        organizationId:
+          description: The organization ID.
+          example: 1245678
+          type: integer
+        fingerprint:
+          description: A hash that is used to register the Cisco Secure Client on
+            users devices in the organization.
+          example: example-fingerprint
+          type: string
+        userId:
+          description: The first 32 bits of the API key ID.
+          example: 1456890
+          format: int32
+          type: integer
+      required:
+      - fingerprint
+      - organizationId
+      - userId
+      type: object
+    RoamingComputerObject:
+      description: The properties of the roaming computer.
+      example:
+        originId: 618400931
+        deviceId: AB000C044C87A4F0
+        type: anyconnect
+        status: Encrypted
+        swgStatus: Protected
+        lastSyncStatus: Encrypted
+        lastSyncSwgStatus: Protected
+        lastSync: 2024-09-19T10:34:30.000Z
+        version: 5.2.3
+        name: wkst2
+        hasIpBlocking: false
+        appliedBundle: 2
+        osVersion: Microsoft Windows NT 10.0.19045.0
+        osVersionName: Windows 10
+        anyconnectDeviceId: 9e963836fef9429b66c3e47b58e496efce2b5003
+      properties:
+        originId:
+          description: The origin ID for the roaming computer.
+          example: 1234556
+          type: integer
+        name:
+          description: The name of the roaming computer. `name` is a sequence of 1–50
+            characters.
+          example: roaming-computer-one
+          maxLength: 50
+          minLength: 1
+          type: string
+        deviceId:
+          description: The hex ID of the roaming computer.
+          example: AB00C7DCEC99D211
+          type: string
+        type:
+          description: The type of the roaming computer.
+          example: anyconnect
+          type: string
+        status:
+          description: The status of the roaming computer with DNS-layer security.
+          enum:
+          - "false"
+          - Open
+          - Transparent
+          - Encrypted
+          - VA
+          - Network
+          - Disabled
+          - Uninstalled
+          - TrustedCustomerNetwork
+          - CiscoTrustedNetwork
+          - DisabledDueToACVpnFullTunnel
+          example: Encrypted
+          type: string
+        swgStatus:
+          description: The status of the roaming computer with Internet security (Secure
+            Web Gateway).
+          enum:
+          - "false"
+          - NA
+          - Protected
+          - Unprotected
+          - Disabled
+          - DisabledDueToVPN
+          - DisabledDueToTrustedNetwork
+          - ConfigError
+          - CloudServiceUnavailable
+          example: Protected
+          type: string
+        lastSyncStatus:
+          description: The status of the last sync on the roaming computer with DNS-layer
+            security.
+          enum:
+          - "false"
+          - Open
+          - Transparent
+          - Encrypted
+          - VA
+          - Network
+          - Disabled
+          - Uninstalled
+          - TrustedCustomerNetwork
+          - CiscoTrustedNetwork
+          - DisabledDueToACVpnFullTunnel
+          example: Encrypted
+          type: string
+        lastSyncSwgStatus:
+          description: The status of the last sync on the roaming computer with Internet
+            security (Secure Web Gateway).
+          enum:
+          - NA
+          - Protected
+          - Unprotected
+          - Disabled
+          - DisabledDueToVPN
+          - DisabledDueToTrustedNetwork
+          - ConfigError
+          - CloudServiceUnavailable
+          example: Protected
+          type: string
+        lastSync:
+          description: The date and time (timestamp) of the last sync.
+          example: 2024-09-19T10:34:30Z
+          format: date-time
+          type: string
+        appliedBundle:
+          description: The policy ID.
+          example: 0
+          type: integer
+        hasIpBlocking:
+          description: Specifies whether the roaming computer has IP blocking.
+          example: false
+          type: boolean
+        version:
+          description: The version of the Cisco Secure Client with the Internet Security
+            module deployed on the roaming computer.
+          example: "5.0"
+          type: string
+        osVersion:
+          description: The OS version of the roaming computer.
+          example: Microsoft Windows NT 10.0.19045.0
+          type: string
+        osVersionName:
+          description: The OS version name of the roaming computer.
+          example: Windows 10
+          type: string
+        anyconnectDeviceId:
+          description: The ID of the device that has the Cisco Secure Client deployed
+            with the Internet Security module.
+          example: 6949b5cbfdc0b48ae4a58592867529480d88ef50
+          type: string
+      required:
+      - appliedBundle
+      - deviceId
+      - hasIpBlocking
+      - lastSync
+      - lastSyncStatus
+      - lastSyncSwgStatus
+      - name
+      - originId
+      - osVersion
+      - osVersionName
+      - status
+      - swgStatus
+      - type
+      - version
+      type: object
+    listRoamingComputers_400_response:
+      example:
+        error: Bad Request
+        message: message
+        statusCode: 400
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 400
+          type: integer
+        error:
+          description: A malformed client request.
+          example: Bad Request
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listRoamingComputers_401_response:
+      example:
+        error: Unauthorized
+        message: message
+        statusCode: 401
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 401
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Unauthorized
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listRoamingComputers_403_response:
+      example:
+        error: Forbidden
+        message: message
+        statusCode: 403
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 403
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Forbidden
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listRoamingComputers_404_response:
+      example:
+        error: Not Found
+        message: message
+        statusCode: 404
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 404
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Not Found
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listRoamingComputers_500_response:
+      example:
+        error: Internal Server Error
+        message: message
+        statusCode: 500
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 500
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Internal Server Error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    updateRoamingComputer_request:
+      description: Update the `name` property for the roaming computer.
+      properties:
+        name:
+          description: The name of the roaming computer. `name` is a sequence of 1–50
+            characters.
+          example: roaming-computer-one
+          maxLength: 50
+          minLength: 1
+          type: string
+      required:
+      - name
+      type: object
+  securitySchemes:
+    oauthFlow:
+      description: Client credential flow.
+      flows:
+        clientCredentials:
+          scopes:
+            deployments.roamingcomputers:write: Write deployments roaming computers
+            deployments.roamingcomputers:read: Read deployments roaming computers
+            deployments.roamingcomputersOrgInfo:read: Read deployments roaming computers
+              and OrgInfo properties
+          tokenUrl: https://api.sse.cisco.com/auth/v2/token
+      type: oauth2
