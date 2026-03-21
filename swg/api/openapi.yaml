@@ -1,0 +1,598 @@
+openapi: 3.0.1
+info:
+  contact:
+    name: Cloud Security Developer Community
+  description: Manage the Secure Access Secure Web Gateway (SWG) settings for the
+    devices in an organization.
+  title: Cisco Secure Web Gateway Device Settings API
+  version: 2.0.0
+servers:
+- url: "https://api.sse.cisco.com/{basePath}"
+  variables:
+    basePath:
+      default: deployments/v2
+security:
+- oauthFlow: []
+tags:
+- description: Secure Web Gateway (SWG) device settings
+  name: SWG Device Settings
+- name: Secure Access
+paths:
+  /deviceSettings/SWGEnabled/set:
+    post:
+      description: |-
+        Add a list of origin ID and the Secure Web Gateway (SWG) setting for devices in the organization.
+        The SWG device setting overrides the organization-level SWG setting.
+
+        **Note:** Before you can add an SWG override setting to a device, you must register the device as a roaming computer with Secure Access.
+        Secure Access applies the SWG override setting to a device using the device's origin ID.
+        You can list the roaming computers in your organization by sending a request to the Secure Access Roaming Computers API.
+      operationId: createSecureWebGatewayDeviceSettings
+      requestBody:
+        content:
+          application/json:
+            example:
+              value: "1"
+              originIds:
+              - 12321231
+              - 123134314
+            schema:
+              $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_request"
+        description: |-
+          * Provide a list of origin ID for the devices in the organization. The list can contain 1–100 origin IDs.
+          * Provide the Secure Web gateway (SWG) device setting to apply to the devices.
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                totalCount: 2
+                successCount: 1
+                failCount: 1
+                items:
+                - originId: 12321231
+                  code: 200
+                  message: success
+                - originId: 12313431
+                  code: 404
+                  message: The origin ID of the device does not exist.
+                value: "1"
+              schema:
+                $ref: "#/components/schemas/RegisteredSWGDeviceSettings"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              example:
+                Error: Invalid request
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              example:
+                message: Unauthorized request
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              example:
+                message: Forbidden
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              example:
+                Error: Not Found
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Not Found
+        "413":
+          content:
+            application/json:
+              example:
+                Error: "Invalid Request: orginIds in the request exceeded max limit\
+                  \ - 100."
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_413_response"
+          description: Content Too Large
+        "429":
+          content:
+            application/json:
+              example:
+                message: Too many requests. Retry request.
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Too Many Requests
+        "500":
+          content:
+            application/json:
+              example:
+                Error: Internal server error
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - deployments.devices.swg:write
+      summary: Set SWG Override Device Settings
+      tags:
+      - SWG Device Settings
+  /deviceSettings/SWGEnabled/list:
+    post:
+      description: List the Secure Web Gateway (SWG) override setting for devices
+        in the organization.
+      operationId: listSecureWebGatewayDeviceSettings
+      requestBody:
+        content:
+          application/json:
+            example:
+              originIds:
+              - 12321231
+              - 123134314
+            schema:
+              $ref: "#/components/schemas/listSecureWebGatewayDeviceSettings_request"
+        description: Provide a list of origin ID for the devices in the organization.
+          The list can contain 1–100 origin IDs.
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - originId: 124131441
+                name: SWG-enabled
+                value: "1"
+                modifiedAt: 2021-04-26 13:12:11
+              - originId: 124131442
+                name: SWG-not-enabled
+                value: "0"
+                modifiedAt: 2023-04-26 13:12:11
+              schema:
+                $ref: "#/components/schemas/ListSWGDeviceSettings"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              example:
+                Error: Invalid request
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              example:
+                message: Unauthorized request
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              example:
+                message: Forbidden
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              example:
+                Error: Not Found
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Not Found
+        "413":
+          content:
+            application/json:
+              example:
+                Error: "Invalid Request: orginIds in the request exceeded max limit\
+                  \ - 100."
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_413_response"
+          description: Content Too Large
+        "429":
+          content:
+            application/json:
+              example:
+                message: Too many requests. Retry request.
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Too Many Requests
+        "500":
+          content:
+            application/json:
+              example:
+                Error: Internal server error
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - deployments.devices.swg:read
+      summary: List SWG Override Device Settings
+      tags:
+      - SWG Device Settings
+  /deviceSettings/SWGEnabled/remove:
+    post:
+      description: |-
+        Remove the Secure Web Gateway (SWG) override setting for the devices in the organization.
+        Once you remove the override setting on a device, Secure Access applies your organization's SWG setting to the device.
+      operationId: deleteSecureWebGatewayDeviceSettings
+      requestBody:
+        content:
+          application/json:
+            example:
+              originIds:
+              - 12321231
+              - 123134314
+            schema:
+              $ref: "#/components/schemas/listSecureWebGatewayDeviceSettings_request"
+        description: Provide a list of origin ID for the devices in the organization.
+          The list can contain 1–100 origin IDs.
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status: No content
+              schema:
+                $ref: "#/components/schemas/deleteSecureWebGatewayDeviceSettings_200_response"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              example:
+                Error: Invalid request
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              example:
+                message: Unauthorized request
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              example:
+                message: Forbidden
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              example:
+                Error: Not Found
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Not Found
+        "413":
+          content:
+            application/json:
+              example:
+                Error: "Invalid Request: orginIds in the request exceeded max limit\
+                  \ - 100."
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_413_response"
+          description: Content Too Large
+        "429":
+          content:
+            application/json:
+              example:
+                message: Too many requests. Retry request.
+              schema:
+                $ref: "#/components/schemas/error"
+          description: Too Many Requests
+        "500":
+          content:
+            application/json:
+              example:
+                Error: Internal server error
+              schema:
+                $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+          description: Internal Server Error
+      security:
+      - oauthFlow:
+        - deployments.devices.swg:write
+      summary: Delete SWG Override Device Settings
+      tags:
+      - SWG Device Settings
+components:
+  headers:
+    Content-Type:
+      description: The MIME content type of the response body.
+      example: application/json
+      explode: false
+      schema:
+        type: string
+      style: simple
+    Date:
+      description: The timestamp of the response.
+      example: 2023-03-14T18:34:25Z
+      explode: false
+      schema:
+        pattern: "^[0-90-90-90-9-0-90-9-0-90-9T0-90-9:0-90-9:0-90-9Z]+$"
+        type: string
+      style: simple
+  responses:
+    "400ErrorSingle":
+      content:
+        application/json:
+          example:
+            Error: Invalid request
+          schema:
+            $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+      description: Bad Request
+    "401Error":
+      content:
+        application/json:
+          example:
+            message: Unauthorized request
+          schema:
+            $ref: "#/components/schemas/error"
+      description: Unauthorized
+    "403Error":
+      content:
+        application/json:
+          example:
+            message: Forbidden
+          schema:
+            $ref: "#/components/schemas/error"
+      description: Forbidden
+    "404ErrorSingle":
+      content:
+        application/json:
+          example:
+            Error: Not Found
+          schema:
+            $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+      description: Not Found
+    "413ErrorSingle":
+      content:
+        application/json:
+          example:
+            Error: "Invalid Request: orginIds in the request exceeded max limit -\
+              \ 100."
+          schema:
+            $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_413_response"
+      description: Content Too Large
+    "429Error":
+      content:
+        application/json:
+          example:
+            message: Too many requests. Retry request.
+          schema:
+            $ref: "#/components/schemas/error"
+      description: Too Many Requests
+    "500ErrorSingle":
+      content:
+        application/json:
+          example:
+            Error: Internal server error
+          schema:
+            $ref: "#/components/schemas/createSecureWebGatewayDeviceSettings_400_response"
+      description: Internal Server Error
+  schemas:
+    originId:
+      description: The origin ID of the device.
+      example: 12321231
+      format: int64
+      type: integer
+    value:
+      description: |-
+        Specifies whether to enable the Secure Web Gateway (SWG) device settings.
+        Valid values are: `0` or `1` where `1` indicates enable.
+      enum:
+      - "0"
+      - "1"
+      example: "1"
+      type: string
+    error:
+      description: The information about the error condition.
+      example:
+        message: message
+        error: error
+      properties:
+        message:
+          description: The message associated with the error condition.
+          type: string
+        error:
+          description: The status code for the error condition.
+          type: string
+      type: object
+    RegisteredSWGDeviceSettings:
+      description: The information about the Secure Web Gateway (SWG) setting for
+        the devices in the organization.
+      example:
+        totalCount: 2
+        successCount: 1
+        failCount: 1
+        items:
+        - originId: 12321231
+          code: 200
+          message: success
+        - originId: 12313431
+          code: 404
+          message: The origin ID does not exist.
+        value: "1"
+      properties:
+        totalCount:
+          description: The total number of devices that requested to update the device
+            setting.
+          type: integer
+        successCount:
+          description: The number of devices that successfully changed the device
+            setting.
+          type: integer
+        failCount:
+          description: The number of devices that failed to change the device setting.
+          type: integer
+        items:
+          description: The list of device setting status properties.
+          items:
+            $ref: "#/components/schemas/RegisteredSWGDeviceSettings_items_inner"
+          type: array
+        value:
+          $ref: "#/components/schemas/value"
+      required:
+      - failCount
+      - items
+      - successCount
+      - totalCount
+      - value
+      type: object
+    ListSWGDeviceSettings:
+      description: The list of Secure Web Gateway (SWG) settings for the devices in
+        the organization.
+      example:
+      - originId: 124131441
+        name: SWGEnabled
+        value: "1"
+        modifiedAt: 2021-04-26 13:12:11
+      - originId: 124131442
+        name: SWG-not-enabled
+        value: "0"
+        modifiedAt: 2023-04-26 13:12:11
+      items:
+        $ref: "#/components/schemas/ListSWGDeviceSettings_inner"
+      type: array
+    createSecureWebGatewayDeviceSettings_request:
+      description: The properties of the `originIds` and `value` of the SWG device
+        setting.
+      properties:
+        originIds:
+          description: The list of origin IDs. The list can contain 1–100 origin IDs.
+          items:
+            $ref: "#/components/schemas/originId"
+          type: array
+        value:
+          $ref: "#/components/schemas/value"
+      required:
+      - originIds
+      - value
+      type: object
+    createSecureWebGatewayDeviceSettings_400_response:
+      description: The information about the error condition.
+      example:
+        Error: Error
+      properties:
+        Error:
+          description: The message associated with the error condition.
+          type: string
+      required:
+      - Error
+      type: object
+    createSecureWebGatewayDeviceSettings_413_response:
+      description: The list of `originIds` contains more than 100 origin IDs.
+      example:
+        Error: "Invalid Request: orginIds in the request exceeded max limit - 100."
+      properties:
+        Error:
+          description: "Invalid Request: orginIds in the request exceeded max limit\
+            \ - 100."
+          example: "Invalid Request: orginIds in the request exceeded max limit -\
+            \ 100."
+          type: string
+      required:
+      - Error
+      type: object
+    listSecureWebGatewayDeviceSettings_request:
+      description: The `originIds` property.
+      properties:
+        originIds:
+          description: The list of origin IDs. The list can contain 1–100 origin IDs.
+          items:
+            $ref: "#/components/schemas/originId"
+          type: array
+      required:
+      - originIds
+      type: object
+    deleteSecureWebGatewayDeviceSettings_200_response:
+      example:
+        status: No content
+      properties:
+        status:
+          description: Deleted SWG override setting on the devices.
+          example: No content
+          type: string
+      type: object
+    RegisteredSWGDeviceSettings_items_inner:
+      description: The status and description for the device setting.
+      properties:
+        originId:
+          description: The origin ID of the device.
+          example: 12321231
+          format: int64
+          type: integer
+        code:
+          description: The status code of the response.
+          type: integer
+        message:
+          description: The description of the response.
+          type: string
+      required:
+      - code
+      - message
+      - originId
+      type: object
+    ListSWGDeviceSettings_inner:
+      description: The properties of the secure web gateway settings for the device.
+      properties:
+        originId:
+          description: The origin ID of the device.
+          example: 12321231
+          format: int64
+          type: integer
+        name:
+          description: The name of the device setting.
+          example: SWG enabled device
+          type: string
+        value:
+          $ref: "#/components/schemas/value"
+        modifiedAt:
+          description: The date and time when the settings on the device were modified.
+            The timestamp is in the ISO 8601 date format.
+          example: 2021-04-26 13:12:11
+          format: iso-date-time
+          type: string
+      required:
+      - modifiedAt
+      - name
+      - originId
+      - value
+      type: object
+  securitySchemes:
+    oauthFlow:
+      description: client credential flow
+      flows:
+        clientCredentials:
+          scopes:
+            deployments.devices.swg:write: Write SWG device settings
+            deployments.devices.swg:read: Read SWG device settings
+          tokenUrl: https://api.sse.cisco.com/auth/v2/token
+      type: oauth2
