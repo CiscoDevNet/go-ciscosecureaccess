@@ -11,6 +11,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	"github.com/CiscoDevNet/go-ciscosecureaccess/internaldomains"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/networks"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/ntg"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/privateapps"
@@ -125,4 +126,11 @@ func (c *SSEClientFactory) GetNetworksClient(ctx context.Context) *networks.APIC
 	configuration.HTTPClient = c.GetHttpClient(ctx)
 	configuration.Servers[0].URL = c.GetURLString("{basePath}")
 	return networks.NewAPIClient(configuration)
+}
+
+func (c *SSEClientFactory) GetInternalDomainsClient(ctx context.Context) *internaldomains.APIClient {
+	configuration := internaldomains.NewConfiguration()
+	configuration.HTTPClient = c.GetHttpClient(ctx)
+	configuration.Servers[0].URL = c.GetURLString("{basePath}")
+	return internaldomains.NewAPIClient(configuration)
 }
