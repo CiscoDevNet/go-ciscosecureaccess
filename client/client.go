@@ -11,11 +11,13 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
+	"github.com/CiscoDevNet/go-ciscosecureaccess/internaldomains"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/networks"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/ntg"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/privateapps"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/reports"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/resconn"
+	"github.com/CiscoDevNet/go-ciscosecureaccess/roaming"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/rules"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/swg"
 	"github.com/hashicorp/go-retryablehttp"
@@ -126,6 +128,20 @@ func (c *SSEClientFactory) GetNetworksClient(ctx context.Context) *networks.APIC
 	configuration.HTTPClient = c.GetHttpClient(ctx)
 	configuration.Servers[0].URL = c.GetURLString("{basePath}")
 	return networks.NewAPIClient(configuration)
+}
+
+func (c *SSEClientFactory) GetInternalDomainsClient(ctx context.Context) *internaldomains.APIClient {
+	configuration := internaldomains.NewConfiguration()
+	configuration.HTTPClient = c.GetHttpClient(ctx)
+	configuration.Servers[0].URL = c.GetURLString("{basePath}")
+	return internaldomains.NewAPIClient(configuration)
+}
+
+func (c *SSEClientFactory) GetRoamingClient(ctx context.Context) *roaming.APIClient {
+	configuration := roaming.NewConfiguration()
+	configuration.HTTPClient = c.GetHttpClient(ctx)
+	configuration.Servers[0].URL = c.GetURLString("{basePath}")
+	return roaming.NewAPIClient(configuration)
 }
 
 func (c *SSEClientFactory) GetSwgClient(ctx context.Context) *swg.APIClient {

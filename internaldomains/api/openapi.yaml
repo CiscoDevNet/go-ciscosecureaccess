@@ -1,0 +1,837 @@
+openapi: 3.0.1
+info:
+  contact:
+    name: Cloud Security Developer Community
+  description: Manage the internal domains in your organization.
+  title: Cisco Secure Access Internal Domains API
+  version: 2.0.0
+servers:
+- url: "https://api.sse.cisco.com/{basePath}"
+  variables:
+    basePath:
+      default: deployments/v2
+security:
+- oauthFlow: []
+tags:
+- name: Internal Domains
+- name: Secure Access
+paths:
+  /internaldomains:
+    get:
+      description: List the internal domains.
+      operationId: listInternalDomains
+      parameters:
+      - description: The number of a page in the collection.
+        example: 2
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          minimum: 1
+          type: integer
+        style: form
+      - description: The number of records in the collection to return on the page.
+        example: 50
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - id: 1234
+                domain: Internal domain name
+                description: Internal domain description
+                includeAllVAs: false
+                includeAllMobileDevices: false
+                createdAt: 2020-03-09T22:18:26.625Z
+                modifiedAt: 2020-03-09T22:18:26.625Z
+                siteIds: []
+              schema:
+                items:
+                  $ref: "#/components/schemas/InternalDomainObject"
+                type: array
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internaldomains:read
+      summary: List Internal Domains
+      tags:
+      - Internal Domains
+    post:
+      description: |-
+        Create an internal domain. If you do not assign a list of sites to the internal domain, the internal domain
+        is associated with all sites in the organization.
+      operationId: createInternalDomain
+      requestBody:
+        $ref: "#/components/requestBodies/internalDomain"
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 1234
+                domain: Internal domain name
+                description: internal domain description
+                includeAllVAs: false
+                includeAllMobileDevices: false
+                createdAt: 2020-03-09T22:18:26.625Z
+                modifiedAt: 2020-03-09T22:18:26.625Z
+                siteIds:
+                - 928250
+                - 6244410
+              schema:
+                $ref: "#/components/schemas/InternalDomainObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internaldomains:write
+      summary: Create Internal Domain
+      tags:
+      - Internal Domains
+  /internaldomains/{internalDomainId}:
+    delete:
+      description: Delete an internal domain.
+      operationId: deleteInternalDomain
+      parameters:
+      - description: The ID of the internal domain.
+        example: 12456
+        explode: false
+        in: path
+        name: internalDomainId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          content:
+            application/json:
+              schema:
+                nullable: true
+                type: string
+              example: null
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internaldomains:write
+      summary: Delete Internal Domain
+      tags:
+      - Internal Domains
+    get:
+      description: Get an internal domain.
+      operationId: getInternalDomain
+      parameters:
+      - description: The ID of the internal domain.
+        example: 12456
+        explode: false
+        in: path
+        name: internalDomainId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 1234
+                domain: Internal domain name
+                description: Internal domain description
+                includeAllVAs: false
+                includeAllMobileDevices: false
+                createdAt: 2020-03-09T22:18:26.625Z
+                modifiedAt: 2020-03-09T22:18:26.625Z
+                siteIds: []
+              schema:
+                $ref: "#/components/schemas/InternalDomainObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internaldomains:read
+      summary: Get Internal Domain
+      tags:
+      - Internal Domains
+    put:
+      description: Update an internal domain.
+      operationId: updateInternalDomain
+      parameters:
+      - description: The ID of the internal domain.
+        example: 12456
+        explode: false
+        in: path
+        name: internalDomainId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        $ref: "#/components/requestBodies/internalDomain"
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 1234
+                domain: Internal domain name
+                description: Internal domain description
+                includeAllVAs: false
+                includeAllMobileDevices: false
+                createdAt: 2020-03-09T22:18:26.625Z
+                modifiedAt: 2020-03-09T22:18:26.625Z
+                siteIds:
+                - 928250
+                - 6244410
+              schema:
+                $ref: "#/components/schemas/InternalDomainObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalDomains_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internaldomains:write
+      summary: Update Internal Domain
+      tags:
+      - Internal Domains
+components:
+  headers:
+    Content-Type:
+      description: The MIME content type of the response body.
+      example: application/json
+      explode: false
+      schema:
+        type: string
+      style: simple
+    Date:
+      description: The timestamp of the response.
+      example: 2023-03-14T18:34:25Z
+      explode: false
+      schema:
+        pattern: "^[0-90-90-90-9-0-90-9-0-90-9T0-90-9:0-90-9:0-90-9Z]+$"
+        type: string
+      style: simple
+  parameters:
+    paginationPageParam:
+      description: The number of a page in the collection.
+      example: 2
+      explode: true
+      in: query
+      name: page
+      required: false
+      schema:
+        default: 1
+        format: int32
+        minimum: 1
+        type: integer
+      style: form
+    paginationLimitParam:
+      description: The number of records in the collection to return on the page.
+      example: 50
+      explode: true
+      in: query
+      name: limit
+      required: false
+      schema:
+        default: 100
+        format: int32
+        maximum: 100
+        minimum: 1
+        type: integer
+      style: form
+    internalDomainId:
+      description: The ID of the internal domain.
+      example: 12456
+      explode: false
+      in: path
+      name: internalDomainId
+      required: true
+      schema:
+        type: integer
+      style: simple
+  requestBodies:
+    internalDomain:
+      content:
+        application/json:
+          example:
+            domain: The internal domain
+            description: Description of the internal domain
+            includeAllVAs: false
+            includeAllMobileDevices: false
+            siteIds:
+            - 928250
+            - 6244410
+          schema:
+            $ref: "#/components/schemas/createInternalDomain_request"
+      description: Create the internal domain.
+      required: true
+  responses:
+    "400Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalDomains_400_response"
+      description: Bad Request
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "401Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalDomains_401_response"
+      description: Unauthorized
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "403Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalDomains_403_response"
+      description: Forbidden
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "404Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalDomains_404_response"
+      description: Not Found
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "500Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalDomains_500_response"
+      description: Internal Server Error
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+  schemas:
+    InternalDomainObject:
+      example:
+        id: 1234
+        domain: Internal domain name
+        description: internal domain description
+        includeAllVAs: false
+        includeAllMobileDevices: false
+        createdAt: 2020-03-09T22:18:26.625Z
+        modifiedAt: 2020-03-09T22:18:26.625Z
+        siteIds: []
+      properties:
+        id:
+          description: The ID of the internal domain.
+          example: 1234556
+          type: integer
+        domain:
+          description: The domain name of the internal domain.
+          example: cisco-internal.com
+          type: string
+        description:
+          description: The description of the internal domain.
+          example: An internal domain.
+          maxLength: 50
+          minLength: 1
+          type: string
+        includeAllVAs:
+          description: Specifies whether to apply the internal domain to all virtual
+            appliances.
+          example: false
+          type: boolean
+        includeAllMobileDevices:
+          description: Specifies whether to apply the internal domain to all mobile
+            devices.
+          example: false
+          type: boolean
+        createdAt:
+          description: The date and time (ISO 8601 timestamp) when the internal domain
+            was created.
+          example: 2018-06-13T16:07:07.222Z
+          format: date-time
+          type: string
+        modifiedAt:
+          description: The date and time (ISO 8601 timestamp) when the internal domain
+            was modified.
+          example: 2018-06-13T16:07:07.222Z
+          format: date-time
+          type: string
+        siteIds:
+          description: The list of site IDs associated with the domain.
+          example:
+          - 928250
+          - 6244410
+          items:
+            description: A site ID.
+            example: 923250
+            type: integer
+          type: array
+      required:
+      - createdAt
+      - description
+      - domain
+      - id
+      - includeAllMobileDevices
+      - includeAllVAs
+      - modifiedAt
+      - siteIds
+      type: object
+    listInternalDomains_400_response:
+      example:
+        error: Validation Error
+        message: message
+        statusCode: 400
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 400
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Validation Error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listInternalDomains_401_response:
+      example:
+        error: Validation error
+        message: message
+        statusCode: 401
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 401
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Validation error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listInternalDomains_403_response:
+      example:
+        error: Forbidden
+        message: message
+        statusCode: 403
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 403
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Forbidden
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listInternalDomains_404_response:
+      example:
+        error: Not Found
+        message: message
+        statusCode: 404
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 404
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Not Found
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listInternalDomains_500_response:
+      example:
+        error: Internal Server Error
+        message: message
+        statusCode: 500
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 500
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Internal Server Error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    createInternalDomain_request:
+      properties:
+        domain:
+          description: The internal domain.
+          example: cisco-internal.com
+          type: string
+        description:
+          description: The description of the internal domain. The description is
+            a sequence of characters with a length from 1 through 50.
+          example: A description of a domain.
+          maxLength: 50
+          minLength: 1
+          type: string
+        includeAllVAs:
+          description: Specifies whether to apply the internal domain to all virtual
+            appliances.
+          example: false
+          type: boolean
+        includeAllMobileDevices:
+          description: Specifies whether to apply the internal domain to all mobile
+            devices.
+          example: false
+          type: boolean
+        siteIds:
+          description: The list of site IDs associated with the domain.
+          example:
+          - 928250
+          - 6244410
+          items:
+            description: A site ID.
+            example: 923250
+            type: integer
+          type: array
+      required:
+      - domain
+      type: object
+  securitySchemes:
+    oauthFlow:
+      description: The client credential flow.
+      flows:
+        clientCredentials:
+          scopes:
+            deployments.internaldomains:write: Write deployments internal domains
+            deployments.internaldomains:read: Read deployments internal domains
+          tokenUrl: https://api.sse.cisco.com/auth/v2/token
+      type: oauth2
