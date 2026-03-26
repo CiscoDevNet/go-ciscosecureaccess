@@ -19,6 +19,7 @@ import (
 	"github.com/CiscoDevNet/go-ciscosecureaccess/resconn"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/roaming"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/rules"
+	"github.com/CiscoDevNet/go-ciscosecureaccess/swg"
 	"github.com/hashicorp/go-retryablehttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
@@ -134,10 +135,18 @@ func (c *SSEClientFactory) GetInternalDomainsClient(ctx context.Context) *intern
 	configuration.HTTPClient = c.GetHttpClient(ctx)
 	configuration.Servers[0].URL = c.GetURLString("{basePath}")
 	return internaldomains.NewAPIClient(configuration)
+}
 
 func (c *SSEClientFactory) GetRoamingClient(ctx context.Context) *roaming.APIClient {
 	configuration := roaming.NewConfiguration()
 	configuration.HTTPClient = c.GetHttpClient(ctx)
 	configuration.Servers[0].URL = c.GetURLString("{basePath}")
 	return roaming.NewAPIClient(configuration)
+}
+
+func (c *SSEClientFactory) GetSwgClient(ctx context.Context) *swg.APIClient {
+	configuration := swg.NewConfiguration()
+	configuration.HTTPClient = c.GetHttpClient(ctx)
+	configuration.Servers[0].URL = c.GetURLString("{basePath}")
+	return swg.NewAPIClient(configuration)
 }

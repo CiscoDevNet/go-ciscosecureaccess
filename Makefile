@@ -21,6 +21,9 @@ generate-networks:
 generate-resconn:
 	make generate PACKAGE=resconn SPEC=./specs/cisco_secure_access_resource_connector_groups_and_resource_connectors_api_1_0_0.yaml
 
+generate-swg:
+	make generate PACKAGE=swg SPEC=./specs/cisco_secure_web_gateway_device_settings_api_2_0_0.yaml
+  
 generate-internaldomains:
 	make generate PACKAGE=internaldomains SPEC=./specs/cisco_secure_access_internal_domains_api_2_0_0.yaml
   
@@ -31,6 +34,6 @@ generate-reports:
 	make generate PACKAGE=reports SPEC=./specs/cisco_secure_access_reports.yaml CLI_EXTRA="--additional-properties=useTags=false --additional-properties=disallowAdditionalPropertiesIfNotPresent=false --additional-properties=enumClassPrefix=true --openapi-generator-ignore-list api_secure_access.go"
 
 generate-all:
-	for spec in destinationlists ntg reports resconn rules privateapps roaming internaldomains; do \
+	for spec in destinationlists ntg reports resconn rules privateapps roaming internaldomains swg; do \
 	make generate-$${spec} ;\
 	done
