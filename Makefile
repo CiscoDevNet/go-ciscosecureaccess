@@ -23,11 +23,14 @@ generate-resconn:
 
 generate-internaldomains:
 	make generate PACKAGE=internaldomains SPEC=./specs/cisco_secure_access_internal_domains_api_2_0_0.yaml
+  
+generate-roaming:
+	make generate PACKAGE=roaming SPEC=./specs/cisco_secure_access_roaming_computers_api_2_0_0.yaml
 
 generate-reports:
 	make generate PACKAGE=reports SPEC=./specs/cisco_secure_access_reports.yaml CLI_EXTRA="--additional-properties=useTags=false --additional-properties=disallowAdditionalPropertiesIfNotPresent=false --additional-properties=enumClassPrefix=true --openapi-generator-ignore-list api_secure_access.go"
 
 generate-all:
-	for spec in destinationlists ntg reports resconn rules privateapps internaldomains; do \
+	for spec in destinationlists ntg reports resconn rules privateapps roaming internaldomains; do \
 	make generate-$${spec} ;\
 	done
