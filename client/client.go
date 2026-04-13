@@ -12,6 +12,7 @@ import (
 
 	"github.com/CiscoDevNet/go-ciscosecureaccess/destinationlists"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/internaldomains"
+	"github.com/CiscoDevNet/go-ciscosecureaccess/internalnetworks"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/networks"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/ntg"
 	"github.com/CiscoDevNet/go-ciscosecureaccess/privateapps"
@@ -135,6 +136,13 @@ func (c *SSEClientFactory) GetInternalDomainsClient(ctx context.Context) *intern
 	configuration.HTTPClient = c.GetHttpClient(ctx)
 	configuration.Servers[0].URL = c.GetURLString("{basePath}")
 	return internaldomains.NewAPIClient(configuration)
+}
+
+func (c *SSEClientFactory) GetInternalNetworksClient(ctx context.Context) *internalnetworks.APIClient {
+	configuration := internalnetworks.NewConfiguration()
+	configuration.HTTPClient = c.GetHttpClient(ctx)
+	configuration.Servers[0].URL = c.GetURLString("{basePath}")
+	return internalnetworks.NewAPIClient(configuration)
 }
 
 func (c *SSEClientFactory) GetRoamingClient(ctx context.Context) *roaming.APIClient {

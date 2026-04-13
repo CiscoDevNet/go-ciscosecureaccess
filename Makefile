@@ -9,6 +9,9 @@ generate-destinationlists:
 generate-internaldomains:
 	make generate PACKAGE=internaldomains SPEC=./specs/cisco_secure_access_internal_domains_api_2_0_0.yaml
 
+generate-internalnetworks:
+	make generate PACKAGE=internalnetworks SPEC=./specs/cisco_secure_access_internal_networks_api_2_0_0.yaml
+
 generate-networks:
 	make generate PACKAGE=networks SPEC=./specs/cisco_secure_access_networks_api_2_0_0.yaml
 
@@ -34,6 +37,6 @@ generate-swg:
 	make generate PACKAGE=swg SPEC=./specs/cisco_secure_web_gateway_device_settings_api_2_0_0.yaml
 
 generate-all:
-	for spec in destinationlists internaldomains networks ntg privateapps reports resconn roaming rules swg; do \
+	for spec in destinationlists internaldomains internalnetworks networks ntg privateapps reports resconn roaming rules swg; do \
 	make generate-$${spec} ;\
 	done
