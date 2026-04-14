@@ -41,8 +41,8 @@ generate-sites:
 
 generate-all:
 	for spec in destinationlists internaldomains internalnetworks networks ntg privateapps reports resconn roaming rules swg; do \
-
-generate-all:
-	for spec in destinationlists ntg reports resconn rules privateapps roaming internaldomains swg sites; do \
 	make generate-$${spec} ;\
 	done
+
+test:
+	GO_CISCOSECUREACCESS_RUN_FUNCTIONAL=true go test -v -tags=functional ./tests/*_test.go -count 1
