@@ -1,0 +1,877 @@
+openapi: 3.0.1
+info:
+  contact:
+    name: Cloud Security Developer Community
+  description: Manage the internal networks in your organization.
+  title: Cisco Secure Acces Internal Networks API
+  version: 2.0.0
+servers:
+- url: "https://api.sse.cisco.com/{basePath}"
+  variables:
+    basePath:
+      default: deployments/v2
+security:
+- oauthFlow: []
+tags:
+- name: Internal Networks
+- name: Secure Access
+paths:
+  /internalnetworks:
+    get:
+      description: List the internal networks.
+      operationId: listInternalNetworks
+      parameters:
+      - description: The number of a page in the collection.
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          minimum: 1
+          type: integer
+        style: form
+      - description: The number of records to return from the collection on the page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: internal network label
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - originId: 1234
+                name: internal network label
+                ipAddress: 198.5.4.3
+                prefixLength: 24
+                siteName: Site name
+                siteId: 2
+                createdAt: 2020-03-09T22:18:26.625Z
+                modifiedAt: 2020-03-09T22:18:26.625Z
+              schema:
+                items:
+                  $ref: "#/components/schemas/InternalNetworkObject"
+                type: array
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internalnetworks:read
+      summary: List Internal Networks
+      tags:
+      - Internal Networks
+    post:
+      description: Create an internal network.
+      operationId: createInternalNetwork
+      requestBody:
+        $ref: "#/components/requestBodies/InternalNetworkRequestBody"
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                originId: 1234
+                name: internal network label
+                ipAddress: 198.2.3.1
+                prefixLength: 24
+                siteName: Site name
+                siteId: 2
+                createdAt: 2020-03-09T22:18:26.625Z
+                modifiedAt: 2020-03-09T22:18:26.625Z
+              schema:
+                $ref: "#/components/schemas/InternalNetworkObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internalnetworks:write
+      summary: Create Internal Network
+      tags:
+      - Internal Networks
+  /internalnetworks/{internalNetworkId}:
+    delete:
+      description: Delete an internal network.
+      operationId: deleteInternalNetwork
+      parameters:
+      - description: The origin ID (originId) of the internal network.
+        explode: false
+        in: path
+        name: internalNetworkId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          content: {}
+          description: No Content
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internalnetworks:write
+      summary: Delete Internal Network
+      tags:
+      - Internal Networks
+    get:
+      description: Get an internal network.
+      operationId: getInternalNetwork
+      parameters:
+      - description: The origin ID (originId) of the internal network
+        explode: false
+        in: path
+        name: internalNetworkId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                originId: 1234
+                name: internal network label
+                ipAddress: 198.2.3.4
+                prefixLength: 12
+                networkName: Internal network name
+                networkId: 2
+                createdAt: 2020-03-09T22:18:26.625Z
+                modifiedAt: 2020-03-09T22:18:26.625Z
+              schema:
+                $ref: "#/components/schemas/InternalNetworkObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internalnetworks:read
+      summary: Get Internal Network
+      tags:
+      - Internal Networks
+    put:
+      description: Update an internal network.
+      operationId: updateInternalNetwork
+      parameters:
+      - description: The origin ID (originId) of the internal network.
+        explode: false
+        in: path
+        name: internalNetworkId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        $ref: "#/components/requestBodies/InternalNetworkRequestBody"
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                originId: 1234
+                name: internal network label
+                ipAddress: An IP address
+                prefixLength: 24
+                siteName: Site name
+                siteId: 2
+                createdAt: 2020-03-09T22:18:26.625Z
+                modifiedAt: 2020-03-09T22:18:26.625Z
+              schema:
+                $ref: "#/components/schemas/InternalNetworkObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listInternalNetworks_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.internalnetworks:write
+      summary: Update Internal Network
+      tags:
+      - Internal Networks
+components:
+  headers:
+    Content-Type:
+      description: The MIME content type of the response body.
+      example: application/json
+      explode: false
+      schema:
+        type: string
+      style: simple
+    Date:
+      description: The timestamp of the response.
+      example: 2023-03-14T18:34:25Z
+      explode: false
+      schema:
+        pattern: "^[0-90-90-90-9-0-90-9-0-90-9T0-90-9:0-90-9:0-90-9Z]+$"
+        type: string
+      style: simple
+  parameters:
+    paginationPageParam:
+      description: The number of a page in the collection.
+      explode: true
+      in: query
+      name: page
+      required: false
+      schema:
+        default: 1
+        format: int32
+        minimum: 1
+        type: integer
+      style: form
+    paginationLimitParam:
+      description: The number of records to return from the collection on the page.
+      explode: true
+      in: query
+      name: limit
+      required: false
+      schema:
+        default: 100
+        format: int32
+        maximum: 100
+        minimum: 1
+        type: integer
+      style: form
+  requestBodies:
+    InternalNetworkRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/createInternalNetwork_request"
+      description: A JSON object that defines the internal network.
+      required: true
+  responses:
+    "400Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalNetworks_400_response"
+      description: Bad Request
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "401Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalNetworks_401_response"
+      description: Unauthorized
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "403Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalNetworks_403_response"
+      description: Forbidden
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "404Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalNetworks_404_response"
+      description: Not Found
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "500Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listInternalNetworks_500_response"
+      description: Internal Server Error
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+  schemas:
+    name:
+      description: The name of the internal network.
+      example: site one internal network
+      maxLength: 50
+      minLength: 1
+      type: string
+    ipAddress:
+      description: The IP (IPv4 or IPv6) address of the internal network.
+      example: 198.2.2.4
+      maxLength: 15
+      minLength: 7
+      type: string
+    prefixLength:
+      description: The length of the internal network's prefix. The prefix length
+        is between 8 and 32.
+      example: 31
+      maximum: 32
+      minimum: 8
+      type: integer
+    siteId:
+      description: |-
+        The ID of the site, which is associated with the internal network.
+        The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+      example: 1234
+      type: integer
+    networkId:
+      description: |-
+        The ID of the network, which is associated with the internal network.
+        The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+      example: 1234
+      type: integer
+    tunnelId:
+      description: |-
+        The ID of the network tunnel group ID, which is associated with the internal network.
+        The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+      example: 1234
+      type: integer
+    InternalNetworkObject:
+      description: The properties of the internal network.
+      example:
+        originId: 1234
+        name: internal network label
+        ipAddress: 192.2.3.4
+        prefixLength: 24
+        networkName: Internal network name
+        networkId: 2
+        createdAt: 2020-03-09T22:18:26.625Z
+        modifiedAt: 2020-03-09T22:18:26.625Z
+      properties:
+        originId:
+          description: The origin ID of the internal network.
+          type: integer
+        name:
+          description: The name of the internal network.
+          example: site one internal network
+          maxLength: 50
+          minLength: 1
+          type: string
+        ipAddress:
+          description: The IP (IPv4 or IPv6) address of the internal network.
+          example: 198.2.2.4
+          maxLength: 15
+          minLength: 7
+          type: string
+        prefixLength:
+          description: The length of the internal network's prefix. The prefix length
+            is between 8 and 32.
+          example: 31
+          maximum: 32
+          minimum: 8
+          type: integer
+        siteName:
+          description: The name of the site that is associated with the internal network.
+          type: string
+        siteId:
+          description: |-
+            The ID of the site, which is associated with the internal network.
+            The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+          example: 1234
+          type: integer
+        networkName:
+          description: The name of the network that is associated with the internal
+            network.
+          type: string
+        networkId:
+          description: |-
+            The ID of the network, which is associated with the internal network.
+            The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+          example: 1234
+          type: integer
+        tunnelName:
+          description: The name of the network tunnel group that is associated with
+            the internal network.
+          type: string
+        tunnelId:
+          description: |-
+            The ID of the network tunnel group ID, which is associated with the internal network.
+            The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+          example: 1234
+          type: integer
+        createdAt:
+          description: The date and time (ISO8601 timestamp) when the internal network
+            was created.
+          example: 2018-06-13T16:07:07.222Z
+          format: date-time
+          type: string
+        modifiedAt:
+          description: The date and time (ISO8601 timestamp) when the internal network
+            was modified.
+          example: 2018-06-13T16:07:07.222Z
+          format: date-time
+          type: string
+      required:
+      - ipAddress
+      - name
+      - originId
+      - prefixLength
+      type: object
+    listInternalNetworks_400_response:
+      example:
+        error: Validation Error
+        message: message
+        statusCode: 400
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 400
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Validation Error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listInternalNetworks_401_response:
+      example:
+        error: Validation error
+        message: message
+        statusCode: 401
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 401
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Validation error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listInternalNetworks_403_response:
+      example:
+        error: Forbidden
+        message: message
+        statusCode: 403
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 403
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Forbidden
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listInternalNetworks_404_response:
+      example:
+        error: Not Found
+        message: message
+        statusCode: 404
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 404
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Not Found
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listInternalNetworks_500_response:
+      example:
+        error: Internal Server Error
+        message: message
+        statusCode: 500
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 500
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Internal Server Error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    createInternalNetwork_request:
+      description: |-
+        The properties of the internal network.
+        Specify one of: `tunnelId`, `siteId`, or `networkId`.
+        **Note:** Provide the ID of a Network Tunnel Group for the value of `tunnelId`.
+      example:
+        name: internal network label
+        ipAddress: 198.2.2.8
+        prefixLength: 12
+        siteId: 1
+      properties:
+        name:
+          description: The name of the internal network.
+          example: site one internal network
+          maxLength: 50
+          minLength: 1
+          type: string
+        ipAddress:
+          description: The IP (IPv4 or IPv6) address of the internal network.
+          example: 198.2.2.4
+          maxLength: 15
+          minLength: 7
+          type: string
+        prefixLength:
+          description: The length of the internal network's prefix. The prefix length
+            is between 8 and 32.
+          example: 31
+          maximum: 32
+          minimum: 8
+          type: integer
+        siteId:
+          description: |-
+            The ID of the site, which is associated with the internal network.
+            The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+          example: 1234
+          type: integer
+        networkId:
+          description: |-
+            The ID of the network, which is associated with the internal network.
+            The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+          example: 1234
+          type: integer
+        tunnelId:
+          description: |-
+            The ID of the network tunnel group ID, which is associated with the internal network.
+            The internal network is associated with either a `siteId`, `networkId`, or `tunnelId`.
+          example: 1234
+          type: integer
+      required:
+      - ipAddress
+      - name
+      - prefixLength
+      type: object
+  securitySchemes:
+    oauthFlow:
+      description: client credential flow
+      flows:
+        clientCredentials:
+          scopes:
+            deployments.internalnetworks:write: Write deployments internal networks
+            deployments.internalnetworks:read: Read deployments internal networks
+          tokenUrl: https://api.sse.cisco.com/auth/v2/token
+      type: oauth2
