@@ -28,7 +28,7 @@ func main() {
 	// List existing sites
 	listResp, httpRes, err := apiClient.SitesAPI.ListSites(auth).Page(1).Limit(10).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SitesAPI.ListSites``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `SitesAPI.ListSites`: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", httpRes)
 	}
 	fmt.Fprintf(os.Stdout, "Response from `SitesAPI.ListSites`: %v\n", listResp)
@@ -37,7 +37,7 @@ func main() {
 	createSiteRequest := *sites.NewCreateSiteRequest("go-sdk-site-example")
 	createResp, httpRes, err := apiClient.SitesAPI.CreateSite(auth).CreateSiteRequest(createSiteRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SitesAPI.CreateSite``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `SitesAPI.CreateSite`: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", httpRes)
 		return
 	}
@@ -52,10 +52,10 @@ func main() {
 	fmt.Fprintf(os.Stdout, "Response from `SitesAPI.GetSite`: %v\n", getResp)
 
 	// Update the new site
-	resp, r, err := apiClient.SitesAPI.UpdateSite(context.Background(), createResp.GetSiteId()).CreateSiteRequest(createSiteRequest).Execute()
+	resp, httpRes, err := apiClient.SitesAPI.UpdateSite(auth, createResp.GetSiteId()).CreateSiteRequest(createSiteRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SitesAPI.UpdateSite``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+		fmt.Fprintf(os.Stderr, "Error when calling `SitesAPI.UpdateSite`: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", httpRes)
 	}
 	// response from `UpdateSite`: SiteObject
 	fmt.Fprintf(os.Stdout, "Response from `SitesAPI.UpdateSite`: %v\n", resp)
@@ -63,8 +63,8 @@ func main() {
 	// Delete the new site
 	deleteResp, err := apiClient.SitesAPI.DeleteSite(auth, createResp.GetSiteId()).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SitesAPI.DeleteSite``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", httpRes)
+		fmt.Fprintf(os.Stderr, "Error when calling `SitesAPI.DeleteSite`: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", deleteResp)
 	}
 	fmt.Fprintf(os.Stdout, "Response from `SitesAPI.DeleteSite`: %v\n", deleteResp)
 }
