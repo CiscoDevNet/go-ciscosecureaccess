@@ -1,0 +1,786 @@
+openapi: 3.0.1
+info:
+  contact:
+    name: Cloud Security Developer Community
+  description: Create and manage Sites in the organization.
+  title: Cisco Secure Access Sites API
+  version: 2.0.0
+servers:
+- url: "https://api.sse.cisco.com/{basePath}"
+  variables:
+    basePath:
+      default: deployments/v2
+security:
+- oauthFlow: []
+tags:
+- name: Sites
+- name: Secure Access
+paths:
+  /sites:
+    get:
+      description: List the Sites in the organization.
+      operationId: listSites
+      parameters:
+      - description: The number of a page in the collection.
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          minimum: 1
+          type: integer
+        style: form
+      - description: The number of items in the collection to return on the page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - originId: 1234
+                name: Name of the Site
+                siteId: 14
+                isDefault: false
+                modifiedAt: 2020-03-09T22:18:26.625Z
+                createdAt: 2020-03-09T22:18:26.625Z
+              schema:
+                items:
+                  $ref: "#/components/schemas/SiteObject"
+                type: array
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.sites:read
+      summary: List Sites
+      tags:
+      - Sites
+    post:
+      description: Create a Site in the organization.
+      operationId: createSite
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: A site name
+            schema:
+              $ref: "#/components/schemas/createSite_request"
+        description: Register a Site.
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                originId: 1234
+                name: Name of the Site
+                siteId: 14
+                isDefault: false
+                type: Type of Site
+                internalNetworkCount: 10
+                vaCount: 2
+                modifiedAt: 2020-03-09T22:18:26.625Z
+                createdAt: 2020-03-09T22:18:26.625Z
+              schema:
+                $ref: "#/components/schemas/SiteObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.sites:write
+      summary: Create Site
+      tags:
+      - Sites
+  /sites/{siteId}:
+    delete:
+      description: Delete a Site in the organization.
+      operationId: deleteSite
+      parameters:
+      - description: The ID of the Site.
+        example: 13545
+        explode: false
+        in: path
+        name: siteId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          content: {}
+          description: No Content
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.sites:write
+      summary: Delete Site
+      tags:
+      - Sites
+    get:
+      description: Get a Site in the organization.
+      operationId: getSite
+      parameters:
+      - description: The ID of the Site.
+        example: 13545
+        explode: false
+        in: path
+        name: siteId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                originId: 1234
+                name: Name of the site
+                siteId: 14
+                isDefault: false
+                modifiedAt: 2020-03-09T22:18:26.625Z
+                createdAt: 2020-03-09T22:18:26.625Z
+              schema:
+                $ref: "#/components/schemas/SiteObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.sites:read
+      summary: Get Site
+      tags:
+      - Sites
+    put:
+      description: Update a Site in the organization.
+      operationId: updateSite
+      parameters:
+      - description: The ID of the Site.
+        example: 13545
+        explode: false
+        in: path
+        name: siteId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: my network and site
+            schema:
+              $ref: "#/components/schemas/createSite_request"
+        description: Update the properties of the Site.
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                originId: 1234
+                name: Name of the Site
+                siteId: 12
+                isDefault: false
+                modifiedAt: 2020-03-09T22:18:26.625Z
+                createdAt: 2020-03-09T22:18:26.625Z
+              schema:
+                $ref: "#/components/schemas/SiteObject"
+          description: OK
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_400_response"
+          description: Bad Request
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_401_response"
+          description: Unauthorized
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_403_response"
+          description: Forbidden
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_404_response"
+          description: Not Found
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listSites_500_response"
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              $ref: "#/components/headers/Content-Type"
+            Date:
+              $ref: "#/components/headers/Date"
+      security:
+      - oauthFlow:
+        - deployments.sites:write
+      summary: Update Site
+      tags:
+      - Sites
+components:
+  headers:
+    Content-Type:
+      description: The MIME content type of the response body.
+      example: application/json
+      explode: false
+      schema:
+        type: string
+      style: simple
+    Date:
+      description: The timestamp of the response.
+      example: 2023-03-14T18:34:25Z
+      explode: false
+      schema:
+        pattern: "^[0-90-90-90-9-0-90-9-0-90-9T0-90-9:0-90-9:0-90-9Z]+$"
+        type: string
+      style: simple
+  parameters:
+    paginationPageParam:
+      description: The number of a page in the collection.
+      explode: true
+      in: query
+      name: page
+      required: false
+      schema:
+        default: 1
+        format: int32
+        minimum: 1
+        type: integer
+      style: form
+    paginationLimitParam:
+      description: The number of items in the collection to return on the page.
+      explode: true
+      in: query
+      name: limit
+      required: false
+      schema:
+        default: 100
+        format: int32
+        maximum: 100
+        minimum: 1
+        type: integer
+      style: form
+    siteId:
+      description: The ID of the Site.
+      example: 13545
+      explode: false
+      in: path
+      name: siteId
+      required: true
+      schema:
+        type: integer
+      style: simple
+  responses:
+    "400Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listSites_400_response"
+      description: Bad Request
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "401Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listSites_401_response"
+      description: Unauthorized
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "403Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listSites_403_response"
+      description: Forbidden
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "404Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listSites_404_response"
+      description: Not Found
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+    "500Error":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listSites_500_response"
+      description: Internal Server Error
+      headers:
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+        Date:
+          $ref: "#/components/headers/Date"
+  schemas:
+    name:
+      description: The name of the Site. The name is a sequence of 1–255 characters.
+      example: site-one
+      maxLength: 255
+      minLength: 1
+      type: string
+    SiteObject:
+      example:
+        originId: 1234
+        name: Name of the site
+        siteId: 14
+        isDefault: false
+        modifiedAt: 2020-03-09T22:18:26.625Z
+        createdAt: 2020-03-09T22:18:26.625Z
+      properties:
+        originId:
+          description: The origin ID of the Site.
+          example: 13456
+          type: integer
+        name:
+          description: The name of the Site. The name is a sequence of 1–255 characters.
+          example: site-one
+          maxLength: 255
+          minLength: 1
+          type: string
+        siteId:
+          description: The ID of the Site.
+          example: 1356
+          type: integer
+        isDefault:
+          description: Specifies whether the Site is the default Site.
+          example: true
+          type: boolean
+        type:
+          description: The type of the Site.
+          type: string
+        internalNetworkCount:
+          description: The number of internal networks that are associated with the
+            Site.
+          example: 20
+          type: integer
+        vaCount:
+          description: The number of virtual appliances that are associated with the
+            Site.
+          example: 25
+          type: integer
+        createdAt:
+          description: |
+            The date and time (ISO 8601 timestamp) when the Site was created.
+          example: 2018-06-13T16:07:07.222Z
+          format: date-time
+          type: string
+        modifiedAt:
+          description: The date and time (ISO 8601 timestamp) when the Site was modified.
+          example: 2018-06-13T16:07:07.222Z
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - isDefault
+      - modifiedAt
+      - name
+      - originId
+      - siteId
+      type: object
+    listSites_400_response:
+      example:
+        error: Validation Error
+        message: message
+        statusCode: 400
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 400
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Validation Error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listSites_401_response:
+      example:
+        error: Validation error
+        message: message
+        statusCode: 401
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 401
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Validation error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listSites_403_response:
+      example:
+        error: Forbidden
+        message: message
+        statusCode: 403
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 403
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Forbidden
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listSites_404_response:
+      example:
+        error: Not Found
+        message: message
+        statusCode: 404
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 404
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Not Found
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    listSites_500_response:
+      example:
+        error: Internal error
+        message: message
+        statusCode: 500
+      properties:
+        statusCode:
+          description: HTTP status code
+          example: 500
+          type: integer
+        error:
+          description: A brief description of the error
+          example: Internal error
+          type: string
+        message:
+          description: Detailed error message
+          type: string
+      type: object
+    createSite_request:
+      properties:
+        name:
+          description: The name of the Site. The name is a sequence of 1–255 characters.
+          example: site-one
+          maxLength: 255
+          minLength: 1
+          type: string
+      required:
+      - name
+      type: object
+  securitySchemes:
+    oauthFlow:
+      description: Client credential flow.
+      flows:
+        clientCredentials:
+          scopes:
+            deployments.sites:write: Write deployments Sites
+            deployments.sites:read: Read deployments Sites
+          tokenUrl: https://api.sse.cisco.com/auth/v2/token
+      type: oauth2
