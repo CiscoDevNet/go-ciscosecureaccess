@@ -62,3 +62,75 @@ Retrieve a pointer to an SSE Access Policies API client
 clientFactory := client.SSEClientFactory{KeyId: os.Getenv("API_KEY_ID"), KeySecret: os.Getenv("API_KEY_SECRET")}
 apiClient := clientFactory.GetRulesClient()
 ```
+
+## *destinationlists.APIClient GetDestinationListsClient()
+
+Retrieve a pointer to an SSE Destination Lists API client
+
+### Example
+
+```go
+
+clientFactory := client.SSEClientFactory{KeyId: os.Getenv("API_KEY_ID"), KeySecret: os.Getenv("API_KEY_SECRET")}
+apiClient := clientFactory.GetDestinationListsClient()
+```
+
+## *internaldomains.APIClient GetInternalDomainsClient()
+
+Retrieve a pointer to an SSE Internal Domains API client
+
+### Example
+
+```go
+
+clientFactory := client.SSEClientFactory{KeyId: os.Getenv("API_KEY_ID"), KeySecret: os.Getenv("API_KEY_SECRET")}
+apiClient := clientFactory.GetInternalDomainsClient()
+```
+
+## *networks.APIClient GetNetworksClient()
+
+Retrieve a pointer to an SSE Networks API client
+
+### Example
+
+```go
+
+clientFactory := client.SSEClientFactory{KeyId: os.Getenv("API_KEY_ID"), KeySecret: os.Getenv("API_KEY_SECRET")}
+apiClient := clientFactory.GetNetworksClient()
+```
+
+## *reports.APIClient GetReportsClient()
+
+Retrieve a pointer to an SSE Reports API client
+
+### Example
+
+```go
+
+clientFactory := client.SSEClientFactory{KeyId: os.Getenv("API_KEY_ID"), KeySecret: os.Getenv("API_KEY_SECRET")}
+apiClient := clientFactory.GetReportsClient()
+```
+
+## *roaming.APIClient GetRoamingClient()
+
+Retrieve a pointer to an SSE Roaming API client
+
+### Example
+
+```go
+
+clientFactory := client.SSEClientFactory{KeyId: os.Getenv("API_KEY_ID"), KeySecret: os.Getenv("API_KEY_SECRET")}
+apiClient := clientFactory.GetRoamingClient()
+```
+
+## *swg.APIClient GetSwgClient()
+
+Retrieve a pointer to an SSE Secure Web Gateway API client
+
+### Example
+
+```go
+
+clientFactory := client.SSEClientFactory{KeyId: os.Getenv("API_KEY_ID"), KeySecret: os.Getenv("API_KEY_SECRET")}
+apiClient := clientFactory.GetSwgClient()
+```

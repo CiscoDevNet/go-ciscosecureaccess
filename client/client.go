@@ -6,6 +6,7 @@ package client
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"sync"
@@ -39,6 +40,23 @@ type SSEClientFactory struct {
 	mu            sync.Mutex
 }
 
+func noRetryOnAuthFailure(ctx context.Context, resp *http.Response, err error) (bool, error) {
+	if resp != nil && (resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden) {
+		return false, nil
+	}
+
+	if err != nil {
+		var retrieveErr *oauth2.RetrieveError
+		if errors.As(err, &retrieveErr) &&
+			(retrieveErr.Response.StatusCode == http.StatusUnauthorized ||
+				retrieveErr.Response.StatusCode == http.StatusForbidden) {
+			return false, nil
+		}
+	}
+
+	return retryablehttp.DefaultRetryPolicy(ctx, resp, err)
+}
+
 func (c *SSEClientFactory) GetHttpClient(ctx context.Context) *http.Client {
 
 	c.mu.Lock()
@@ -50,6 +68,7 @@ func (c *SSEClientFactory) GetHttpClient(ctx context.Context) *http.Client {
 		// Create a retryable HTTP client for token requests
 		tokenRetryClient := retryablehttp.NewClient()
 		tokenRetryClient.RetryMax = 10
+		tokenRetryClient.CheckRetry = noRetryOnAuthFailure
 
 		sSEAuthconfig := &clientcredentials.Config{
 			ClientID:     c.KeyId,
@@ -59,13 +78,13 @@ func (c *SSEClientFactory) GetHttpClient(ctx context.Context) *http.Client {
 		// Set the HTTP client for OAuth2 to use our retryable client
 		ctx = context.WithValue(ctx, oauth2.HTTPClient, tokenRetryClient.StandardClient())
 
-		initial, _ := sSEAuthconfig.TokenSource(ctx).Token()
-		oauthHttpClient := oauth2.NewClient(ctx, oauth2.ReuseTokenSource(initial, sSEAuthconfig.TokenSource(ctx)))
+		oauthHttpClient := oauth2.NewClient(ctx, sSEAuthconfig.TokenSource(ctx))
 
 		// Create another retryable client for API requests
 		retryHttpClient := retryablehttp.NewClient()
 		retryHttpClient.HTTPClient = oauthHttpClient
 		retryHttpClient.RetryMax = 10
+		retryHttpClient.CheckRetry = noRetryOnAuthFailure
 
 		c.SSEHttpClient = retryHttpClient.StandardClient()
 	}
